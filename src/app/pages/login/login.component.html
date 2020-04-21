@@ -1,0 +1,70 @@
+<div fxLayoutAlign="center center" style="height: 100vh;">
+  <mat-card class="loginCard" style="padding: 0px; margin: 0px;">
+    <!-- <mat-progress-bar mode="buffer"></mat-progress-bar> -->
+
+    <div
+      style="margin: 20px;"
+      fxLayout="column"
+      fxLayoutAlign="center"
+      fxLayoutGap="20px"
+    >
+      <div
+        fxLayout="center"
+        fxLayoutAlign="center center"
+        style="padding-bottom: 20px;"
+        marg
+      >
+        <img
+          src="./assets/svgs/undraw_order_ride_xjs4.svg"
+          height="200"
+          width="300"
+        />
+      </div>
+
+      <mat-card-content fxLayout="column" fxLayoutAlign="center center">
+        <mat-label class="subheading-1" style="padding: 20px;"
+          ><b>GET A RIDE TO CHURCH</b></mat-label
+        >
+        <form [formGroup]="authForm" (ngSubmit)="onSubmit(authForm)">
+          <mat-form-field appearance="outline" style="width: 100%;">
+            <input
+              matInput
+              placeholder="Enter your phone number"
+              style="text-align: center; font-size: 25px;"
+              formControlName="phoneNumber"
+            />
+
+            <mat-error>*Please check input field</mat-error>
+          </mat-form-field>
+
+          <div style="padding-top: 20px;">
+            <app-custom-btn
+              [btnHeight]="'50px'"
+              [btnWidth]="'350px'"
+              [text]="'REQUEST RIDE'"
+              [color]="'accent'"
+              [isloading]="requestStart"
+              [type]="'submit'"
+            >
+            </app-custom-btn>
+          </div>
+        </form>
+      </mat-card-content>
+    </div>
+  </mat-card>
+</div>
+
+<!-- <ol>
+  <li>
+    <mat-form-field>
+      <mat-label>What's your name?</mat-label>
+      <input matInput [(ngModel)]="name" />
+    </mat-form-field>
+  </li>
+  <li>
+    <button mat-raised-button (click)="openDialog()">Pick one</button>
+  </li>
+  <li *ngIf="animal">
+    You chose: <i>{{ animal }}</i>
+  </li>
+</ol> -->

@@ -1,0 +1,92 @@
+<div
+  *ngIf="userInfo"
+  class="example-container"
+  [class.example-is-mobile]="mobileQuery.matches"
+>
+  <mat-toolbar
+    style="min-height: 56px;"
+    color="accent"
+    fxLayoutAlign="space-between center"
+  >
+    <div fxLayout="row" fxLayoutAlign="center center">
+      <button mat-icon-button (click)="snav.toggle()">
+        <mat-icon>menu</mat-icon>
+      </button>
+      <h1>{{ userInfo.OrganizationName }}</h1>
+    </div>
+
+    <div>
+      <!-- <button mat-button [matMenuTriggerFor]="aboveMenu">
+        <span fxHide.lt-sm>Notifications</span
+        ><mat-icon>notifications_none</mat-icon>
+      </button> -->
+      <mat-menu #aboveMenu="matMenu" yPosition="below">
+        <button mat-menu-item routerLink="/home/note">
+          <span>Admin</span>
+        </button>
+        <button mat-menu-item routerLink="/home/note">
+          <span>General</span>
+        </button>
+      </mat-menu>
+      <button mat-button [matMenuTriggerFor]="beforeMenu">
+        <span fxHide.lt-sm>Actions</span><mat-icon>more_vert</mat-icon>
+      </button>
+      <mat-menu #beforeMenu="matMenu" xPosition="before">
+        <button mat-menu-item routerLink="/home/profile">
+          <mat-icon>account_box</mat-icon> <span>View profile</span>
+        </button>
+        <button mat-menu-item (click)="logOutUser()">
+          <mat-icon>lock</mat-icon> <span>Logout</span>
+        </button>
+      </mat-menu>
+    </div>
+  </mat-toolbar>
+
+  <mat-sidenav-container
+    class="example-sidenav-container"
+    [style.marginTop.px]="mobileQuery.matches ? 0 : 0"
+  >
+    <mat-sidenav
+      style="width: 250px;"
+      #snav
+      opened
+      [mode]="mobileQuery.matches ? 'over' : 'side'"
+      [fixedInViewport]="mobileQuery.matches"
+      fixedTopGap="56"
+    >
+      <mat-nav-list
+        style="width: 100%;"
+        fxLayout="column"
+        fxLayoutAlign="center center"
+      >
+        <div style="padding: 20px;" routerLink="/home/profile">
+          <ngx-avatar [name]="userInfo.FullName"></ngx-avatar>
+        </div>
+        <p>{{ userInfo.Email }}</p>
+        <h3 matSubheader>Events</h3>
+        <mat-list-item>
+          <button mat-icon-button class="mat-list-icon">
+            <mat-icon>departure_board</mat-icon>
+          </button>
+          <a matLine routerLink="/home/ride">Schedule Ride</a>
+        </mat-list-item>
+        <mat-list-item>
+          <a matLine routerLink="/home/history">History</a>
+          <button mat-icon-button class="mat-list-icon">
+            <mat-icon>history</mat-icon>
+          </button>
+        </mat-list-item>
+        <mat-list-item>
+          <a matLine routerLink="/home/member">Retrive Members</a>
+          <button mat-icon-button class="mat-list-icon">
+            <mat-icon>history</mat-icon>
+          </button>
+        </mat-list-item>
+      </mat-nav-list>
+    </mat-sidenav>
+
+    <mat-sidenav-content>
+      <router-outlet></router-outlet>
+    </mat-sidenav-content>
+  </mat-sidenav-container>
+</div>

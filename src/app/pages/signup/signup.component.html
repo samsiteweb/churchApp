@@ -1,0 +1,187 @@
+<div fxLayoutAlign="center center">
+  <mat-card class="signUpCard" style="padding: 10px; margin-top: 20px;">
+    <button mat-icon-button color="accent" routerLink="/login">
+      <mat-icon>arrow_back</mat-icon>
+    </button>
+
+    <div style="margin: 0px;" fxLayout="column" fxLayoutAlign="center center">
+      <div
+        fxLayout="column"
+        fxLayoutAlign="center center"
+        style="padding-bottom: 5px;"
+      >
+        <div>
+          <img
+            src="./assets/svgs/undraw_fill_forms_yltj.svg"
+            height="100"
+            width="150"
+          />
+        </div>
+
+        <div>
+          <div style="text-align: center;">
+            <span class="mat-headline" style="color: #f50057;"
+              ><b> {{ formType | titlecase }} Registration</b></span
+            >
+            <p>
+              *Please fill the form below with the latest and most accurate
+              information.
+            </p>
+          </div>
+        </div>
+      </div>
+      <div style="width: 90%;" fxLayout="column">
+        <form [formGroup]="regForm" (ngSubmit)="onSubmit(regForm)">
+          <div fxLayout.lt-sm="column" fxLayout.gt-sm="row" fxLayoutGap="5px">
+            <mat-form-field
+              appearance="outline"
+              fxFlex="100%"
+              fxFlex.gt-md="50%"
+              style="width: 100%;"
+            >
+              <mat-label>First Name</mat-label>
+              <input matInput placeholder="John" formControlName="firstName" />
+              <mat-error>{{ getErrorMessage("firstName") }}</mat-error>
+            </mat-form-field>
+            <mat-form-field
+              appearance="outline"
+              fxFlex="100%"
+              fxFlex.gt-md="50%"
+              style="width: 100%;"
+            >
+              <mat-label>Last Name</mat-label>
+              <input matInput placeholder="Doe" formControlName="lastName" />
+              <mat-error>{{ getErrorMessage("lastName") }}</mat-error>
+            </mat-form-field>
+          </div>
+
+          <mat-form-field appearance="outline" style="width: 100%;">
+            <mat-label>Email</mat-label>
+            <input matInput placeholder="org@org.com" formControlName="email" />
+            <mat-error>{{ getErrorMessage("email") }}</mat-error>
+          </mat-form-field>
+
+          <div
+            formGroupName="address"
+            fxLayout.lt-sm="column"
+            fxLayout.gt-sm="row"
+            fxLayoutGap="10px"
+          >
+            <mat-form-field appearance="outline" style="width: 100%;">
+              <mat-label>City</mat-label>
+              <input matInput placeholder="city" formControlName="city" />
+              <mat-error>{{ getErrorAddressGroup("city") }}</mat-error>
+            </mat-form-field>
+            <mat-form-field appearance="outline" style="width: 100%;">
+              <mat-label>State</mat-label>
+              <input
+                matInput
+                placeholder="Indianapolis"
+                formControlName="state"
+              />
+              <mat-error>{{ getErrorAddressGroup("state") }}</mat-error>
+            </mat-form-field>
+            <mat-form-field appearance="outline" style="width: 100%;">
+              <mat-label>Zip code</mat-label>
+              <input matInput placeholder="94043" formControlName="zipCode" />
+              <mat-error>{{ getErrorAddressGroup("zipCode") }}</mat-error>
+            </mat-form-field>
+          </div>
+
+          <div fxLayout.lt-sm="column" fxLayout.gt-sm="row" fxLayoutGap="5px">
+            <mat-form-field
+              appearance="outline"
+              fxFlex="100%"
+              fxFlex.gt-md="50%"
+              style="width: 100%;"
+            >
+              <mat-label>Phone Number</mat-label>
+              <input
+                matInput
+                placeholder="John"
+                formControlName="phoneNumber"
+              />
+              <mat-error>{{ getErrorMessage("phoneNumber") }}</mat-error>
+            </mat-form-field>
+
+            <mat-form-field
+              appearance="outline"
+              fxFlex="100%"
+              fxFlex.gt-md="50%"
+              style="width: 100%;"
+            >
+              <mat-label>Select Organisation</mat-label>
+              <mat-select formControlName="accountCode">
+                <mat-option
+                  *ngFor="let org of orgList"
+                  [value]="org.OrganizationAccountCode"
+                >
+                  {{ org.OrganizationName }}
+                </mat-option>
+              </mat-select>
+            </mat-form-field>
+          </div>
+
+          <div formGroupName="address">
+            <mat-form-field appearance="outline" style="width: 100%;">
+              <mat-label>Street Address</mat-label>
+              <input
+                matInput
+                placeholder="22, Indianapolis Indiana"
+                formControlName="streetAddress"
+              />
+              <mat-error>{{ getErrorAddressGroup("streetAddress") }}</mat-error>
+            </mat-form-field>
+          </div>
+          <div fxLayout.lt-md="column" fxLayout.gt-md="row" fxLayoutGap="10px">
+            <mat-form-field
+              formGroupName="address"
+              appearance="outline"
+              xFlex="100%"
+              fxFlex.gt-sm="60%"
+              style="width: 100%;"
+            >
+              <mat-label>Country</mat-label>
+              <input matInput placeholder="USA" formControlName="country" />
+              <mat-error>{{ getErrorAddressGroup("country") }}</mat-error>
+            </mat-form-field>
+            <mat-form-field
+              appearance="outline"
+              xFlex="100%"
+              fxFlex.gt-sm="40%"
+              style="width: 100%;"
+            >
+              <mat-label>Rider Count</mat-label>
+              <input
+                matInput
+                placeholder="1"
+                type="number"
+                formControlName="ridersCount"
+              />
+              <mat-error>{{ getErrorMessage("ridersCount") }}</mat-error>
+              <mat-hint
+                >The number of people riding with you. This is can change in the
+                future</mat-hint
+              >
+            </mat-form-field>
+          </div>
+
+          <div
+            style="padding-top: 20px; padding-bottom: 5px;"
+            fxLayoutAlign="center center"
+          >
+            <app-custom-btn
+              [btnHeight]="'50px'"
+              [btnWidth]="'350px'"
+              [text]="'Submit'"
+              [color]="'accent'"
+              [isloading]="formSubmitted"
+              [type]="'submit'"
+            >
+            </app-custom-btn>
+          </div>
+        </form>
+      </div>
+    </div>
+  </mat-card>
+</div>

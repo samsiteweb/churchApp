@@ -1,0 +1,17 @@
+<div class="button-container">
+  <div class="spinner-container" *ngIf="isloading">
+    <mat-spinner [color]="color" diameter="24"></mat-spinner>
+  </div>
+  <button
+    [ngStyle]="{ width: btnWidth, height: btnHeight }"
+    mat-raised-button="mat-raised-button"
+    [type]="type"
+    [disabled]="isloading || disabled"
+    [color]="color"
+    (click)="handleClicks()"
+  >
+    <div [class.text]="isloading">
+      {{ text }}
+    </div>
+  </button>
+</div>

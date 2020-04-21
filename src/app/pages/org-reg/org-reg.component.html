@@ -1,0 +1,106 @@
+<div fxLayout="row" fxLayoutAlign="center center">
+  <mat-card fxLayout="column" class="orgSignUpCard" style="margin: 20px;">
+    <div fxFlexAlign="end">
+      <button
+        mat-flat-button
+        color="accent"
+        [routerLink]="['/signup', 'admin']"
+      >
+        Register an Admin
+      </button>
+    </div>
+    <div fxLayout="column" fxLayoutAlign="center center">
+      <div fxLayout="column" fxLayoutAlign="center center">
+        <div>
+          <img
+            src="./assets/svgs/undraw_fill_forms_yltj.svg"
+            height="150"
+            width="150"
+          />
+        </div>
+
+        <div>
+          <div style="text-align: center;">
+            <span class="mat-headline" style="color: #f50057;"
+              ><b>Organization Registration</b></span
+            >
+            <p>
+              *Please fill the form below to register an organisation with us
+            </p>
+          </div>
+        </div>
+      </div>
+      <div style="width: 90%;" fxLayout="column">
+        <form [formGroup]="orgForm" (ngSubmit)="onSubmit(orgForm)">
+          <mat-form-field appearance="outline" style="width: 100%;">
+            <mat-label>Organisation Name</mat-label>
+            <input
+              matInput
+              placeholder="Organisation name"
+              formControlName="name"
+            />
+            <mat-icon matSuffix>perm_identity</mat-icon>
+            <mat-error>{{ getErrorMessage("name") }}</mat-error>
+          </mat-form-field>
+          <mat-form-field appearance="outline" style="width: 100%;">
+            <mat-label>Email</mat-label>
+            <input matInput placeholder="org@org.com" formControlName="email" />
+            <mat-icon matSuffix>alternate_email</mat-icon>
+            <mat-error>{{ getErrorMessage("email") }}</mat-error>
+          </mat-form-field>
+
+          <mat-form-field appearance="outline" style="width: 100%;">
+            <mat-label>Contact</mat-label>
+            <input
+              matInput
+              placeholder="+3172323123"
+              formControlName="contact"
+            />
+            <mat-icon matSuffix>phone_callback</mat-icon>
+            <mat-error>{{ getErrorMessage("contact") }}</mat-error>
+          </mat-form-field>
+          <mat-form-field appearance="outline" style="width: 100%;">
+            <mat-label>Address</mat-label>
+            <input
+              matInput
+              placeholder="22, Indianapolis Indiana"
+              formControlName="address"
+            />
+            <mat-icon matSuffix>gps_fixed</mat-icon>
+            <mat-error>{{ getErrorMessage("address") }}</mat-error>
+          </mat-form-field>
+          <mat-form-field appearance="outline" style="width: 100%;">
+            <mat-label>Country</mat-label>
+            <input matInput placeholder="USA" formControlName="country" />
+            <mat-icon matSuffix>outlined_flag</mat-icon>
+            <mat-error>{{ getErrorMessage("country") }}</mat-error>
+          </mat-form-field>
+          <mat-form-field appearance="outline" style="width: 100%;">
+            <mat-label>Account Code</mat-label>
+            <input
+              matInput
+              placeholder="eg: MYCOMPANY@2020"
+              formControlName="accountCode"
+            />
+            <mat-icon matSuffix>outlined_flag</mat-icon>
+            <mat-hint
+              >This is a unique Identifier for your organisation</mat-hint
+            >
+            <mat-error>{{ getErrorMessage("accountCode") }}</mat-error>
+          </mat-form-field>
+          <div style="padding-top: 20px;" fxLayoutAlign="center center">
+            <app-custom-btn
+              [btnHeight]="'50px'"
+              [btnWidth]="'350px'"
+              [text]="'Submit'"
+              [color]="'accent'"
+              [isloading]="formSubmitted"
+              [type]="'submit'"
+            >
+            </app-custom-btn>
+          </div>
+        </form>
+      </div>
+    </div>
+  </mat-card>
+</div>

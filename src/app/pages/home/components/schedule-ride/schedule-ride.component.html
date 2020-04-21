@@ -1,0 +1,159 @@
+<div fxLayout="column" style="height: 100%;" fxLayoutAlign="center center">
+  <mat-card style="padding: 20px; margin: 0px;">
+    <!-- <div mat-card-avatar class="example-header-image"></div> -->
+    <div style="margin: 10px;" fxLayout="column" fxLayoutAlign="center center">
+      <div
+        fxLayout="column"
+        fxLayoutAlign="center center"
+        style="padding-bottom: 20px;"
+      >
+        <div>
+          <div style="text-align: center;">
+            <span class="mat-headline" style="color: #f50057;"
+              ><b>Schedule a Ride </b></span
+            >
+            <p>
+              *Please fill the form below with the latest and most accurate
+              information.
+            </p>
+          </div>
+        </div>
+      </div>
+      <div style="width: 80%;" fxLayout="column">
+        <form [formGroup]="rideForm" (ngSubmit)="onSubmit(rideForm)">
+          <div
+            style="margin-top: -10px; margin-bottom: 15px;"
+            fxLayout="column"
+          >
+            <!-- <mat-hint> Select a date and time for your ride </mat-hint> -->
+            <input
+              [ngClass]="{
+                'input-spe': true,
+                'input-error':
+                  (DateTime.errors && isSubmitted) ||
+                  (DateTime.dirty && DateTime.errors)
+              }"
+              [owlDateTime]="dt1"
+              [owlDateTimeTrigger]="dt1"
+              formControlName="requestRideDateTime"
+              placeholder="Pick up Date and time"
+            />
+            <owl-date-time #dt1></owl-date-time>
+            <mat-error
+              *ngIf="
+                (DateTime.errors && isSubmitted) ||
+                (DateTime.touched && DateTime.errors)
+              "
+              >*field is required</mat-error
+            >
+          </div>
+          <div formGroupName="newAddress">
+            <mat-form-field appearance="outline" style="width: 100%;">
+              <mat-label>Street Address</mat-label>
+              <input
+                matInput
+                placeholder="22, Indianapolis Indiana"
+                formControlName="streetAddress"
+              />
+              <mat-error>{{ getErrorMessage2("streetAddress") }}</mat-error>
+            </mat-form-field>
+          </div>
+          <div
+            fxLayout.lt-md="column"
+            fxLayout.gt-md="row"
+            fxLayoutAlign="space-between"
+            formGroupName="newAddress"
+          >
+            <mat-form-field
+              appearance="outline"
+              fxFlex="32%"
+              style="width: 100%;"
+            >
+              <mat-label>City</mat-label>
+              <input matInput placeholder="city" formControlName="city" />
+              <mat-error>{{ getErrorMessage2("city") }}</mat-error>
+            </mat-form-field>
+
+            <mat-form-field
+              appearance="outline"
+              fxFlex="32%"
+              style="width: 100%;"
+            >
+              <mat-label>State</mat-label>
+              <input
+                matInput
+                placeholder="Indianapolis"
+                formControlName="state"
+              />
+              <mat-error>{{ getErrorMessage2("state") }}</mat-error>
+            </mat-form-field>
+            <mat-form-field
+              appearance="outline"
+              fxFlex="32%"
+              style="width: 100%;"
+            >
+              <mat-label>Zip code</mat-label>
+              <input matInput placeholder="94043" formControlName="zipCode" />
+              <mat-error>{{ getErrorMessage2("zipCode") }}</mat-error>
+            </mat-form-field>
+          </div>
+          <div fxLayout.lt-md="column" fxLayout.gt-md="row" fxLayoutGap="10px">
+            <mat-form-field
+              appearance="outline"
+              xFlex="100%"
+              fxFlex.gt-sm="60%"
+              style="width: 100%;"
+              formGroupName="newAddress"
+            >
+              <mat-label>Country</mat-label>
+              <input matInput placeholder="USA" formControlName="country" />
+              <mat-error>{{ getErrorMessage2("country") }}</mat-error>
+            </mat-form-field>
+            <mat-form-field
+              appearance="outline"
+              xFlex="100%"
+              fxFlex.gt-sm="40%"
+              style="width: 100%;"
+            >
+              <mat-label>Rider Count</mat-label>
+              <input
+                matInput
+                placeholder="USA"
+                type="number"
+                formControlName="ridersCount"
+              />
+              <mat-error>{{ getErrorMessage("ridersCount") }}</mat-error>
+              <!-- <mat-hint
+                >The number of people riding with you. This is can change in the
+                future</mat-hint> -->
+            </mat-form-field>
+          </div>
+
+          <mat-form-field appearance="outline" style="width: 100%;">
+            <mat-label>Extra notes</mat-label>
+            <textarea
+              matInput
+              placeholder="Ex. It makes me feel..."
+              formControlName="extraNote"
+            ></textarea>
+          </mat-form-field>
+
+          <div
+            style="padding-top: 10px; padding-bottom: 20px;"
+            fxLayoutAlign="center center"
+          >
+            <app-custom-btn
+              [btnHeight]="'50px'"
+              [btnWidth]="'350px'"
+              [text]="'Submit'"
+              [color]="'accent'"
+              [isloading]="false"
+              [type]="'submit'"
+            >
+            </app-custom-btn>
+          </div>
+        </form>
+      </div>
+    </div>
+  </mat-card>
+</div>

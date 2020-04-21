@@ -1,0 +1,11 @@
+<div fxLayout="row" fxLayoutGap="20px" style="width: 100%; padding: 20px;">
+  <div class="schedule-cards" fxLayout="row" fxLayoutGap="20px">
+    <app-schedule-cards
+      style="padding-bottom: 20px;"
+      [schedule]="schedule"
+      (editClicked)="editSchedule(schedule)"
+      (deleteClicked)="deleteSchedule(schedule)"
+      *ngFor="let schedule of schedules"
+    ></app-schedule-cards>
+  </div>
+</div>

@@ -1,0 +1,45 @@
+<!-- <h1 mat-dialog-title>Hi {{ data.name }}</h1>
+<div mat-dialog-content>
+  <p>What's your favorite animal?</p>
+  <mat-form-field>
+    <mat-label>Favorite Animal</mat-label>
+    <input matInput [(ngModel)]="data.animal" />
+  </mat-form-field>
+</div>
+<div mat-dialog-actions>
+  <button mat-button (click)="onNoClick()">No Thanks</button>
+  <button mat-button [mat-dialog-close]="data.animal" cdkFocusInitial>
+    Ok
+  </button>
+</div> -->
+
+<div
+  fxLayout="column"
+  fxLayoutAlign="center center"
+  fxLayoutGap="10px"
+  style="width: 100%;"
+>
+  <div style="text-align: center;">
+    <b>{{ data.message }}</b>
+  </div>
+  <mat-form-field appearance="outline" style="width: 100%;">
+    <input
+      matInput
+      [(ngModel)]="data.code"
+      style="text-align: center; font-size: 18px;"
+    />
+  </mat-form-field>
+  <div fxLayout="column" fxLayoutAlign="center center">
+    <app-custom-btn
+      (click)="verifyCode()"
+      [disabled]="verifyStart"
+      [btnHeight]="'50px'"
+      [btnWidth]="'150px'"
+      [text]="'Verify'"
+      [color]="'accent'"
+      [isloading]="verifyStart"
+      [type]="'button'"
+    >
+    </app-custom-btn>
+  </div>
+</div>
