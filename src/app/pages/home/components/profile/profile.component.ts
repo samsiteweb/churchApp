@@ -1,6 +1,10 @@
 import { Component, OnInit } from "@angular/core";
 import { FormBuilder, Validators } from "@angular/forms";
 import { SharedPersonalDataService } from "../../shared/shared.personal.data.service";
+import { MemberActionsService } from 'src/app/services/member-actions.service';
+import { MatSnackBar } from '@angular/material/snack-bar';
+import { MatDialog } from '@angular/material/dialog';
+import { DialogComponent } from 'src/app/pages/components/dialog/dialog.component';
 
 @Component({
   selector: "app-profile",
@@ -9,10 +13,12 @@ import { SharedPersonalDataService } from "../../shared/shared.personal.data.ser
 })
 export class ProfileComponent implements OnInit {
   userInfo;
+  code: string
   userForm: any;
   constructor(
     private fb: FormBuilder,
-    private dataService: SharedPersonalDataService
+    private _snackBar: MatSnackBar,
+    private dataService: SharedPersonalDataService, private memberAction: MemberActionsService, private dialog: MatDialog
   ) {
     this.dataService.userInfo.subscribe((data) => {
       this.userInfo = data;
@@ -48,5 +54,34 @@ export class ProfileComponent implements OnInit {
     console.log(form);
   }
 
-  ngOnInit(): void {}
+  openSnackBar(message: string, action: string) {
+    this._snackBar.open(message, action, {
+      duration: 3000,
+    });
+  }
+
+  openDialog(message, type, actionType): void {
+    const dialogRef = this.dialog.open(DialogComponent, {
+      width: "300px",
+      data: { type: type, code: this.code, actionType: actionType, message: message },
+    });
+
+    dialogRef.afterClosed().subscribe((result) => {
+      console.log("The dialog was closed");
+    });
+  }
+
+  requestDeleteAccount(type) {
+    this.memberAction.requestDeleteAccount().subscribe((data: any) => {
+      console.log(data)
+      this.openSnackBar("Request Sent Successfully", "ok")
+      this.openDialog(
+        data.Message,
+        "deleteRequest",
+        type
+      )
+    })
+  }
+
+  ngOnInit(): void { }
 }

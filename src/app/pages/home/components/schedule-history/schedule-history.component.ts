@@ -10,6 +10,10 @@ import { MatSnackBar } from "@angular/material/snack-bar";
   styleUrls: ["./schedule-history.component.scss"],
 })
 export class ScheduleHistoryComponent implements OnInit {
+  tabLoadTimes: Date[] = [];
+  allSchedule: any;
+  scheduleActions: any
+  columnsToDisplay = ["Name", "Email", "PhoneNumber", "DateCreatedView"];
   schedules: any;
   now = moment;
   constructor(
@@ -20,10 +24,39 @@ export class ScheduleHistoryComponent implements OnInit {
     // add this 2 of 4
     console.log("hello world", this.now().format("dd yy mm")); // add this 3 of 4
     console.log(this.now().add(7, "days").format()); // add this 4of 4
+    this.getAllSchedules()
+    this.retriveMemberStatusList()
+  }
+  scheduleAction(event) {
+    console.log(event.ScheduleStatus, 'event')
+    switch (event.ScheduleStatus) {
+      case 'Cancel':
+        this.memberAction.updateMemberScheduleStatus(event.ScheduleStatusId, event.ScheduleId)
+          .subscribe((data) => {
+            this.sliceSchedule({ ScheduleId: event.ScheduleId })
+          }, err => {
+          })
+        break;
+      default:
+        break;
+    }
   }
 
   editSchedule(schedule) {
     console.log("edit clicked");
+  }
+
+  retriveMemberStatusList() {
+    this.memberAction.retriveMemberStatusList().subscribe((data: any) => {
+      this.scheduleActions = data
+    })
+  }
+
+  getTimeLoaded(index: number) {
+    if (!this.tabLoadTimes[index]) {
+      this.tabLoadTimes[index] = new Date();
+    }
+    return this.tabLoadTimes[index];
   }
 
   openSnackBar(message: string, action: string) {
@@ -31,20 +64,23 @@ export class ScheduleHistoryComponent implements OnInit {
       duration: 3000,
     });
   }
+  sliceSchedule(schedule) {
+    let scheduleIndex = this.schedules.findIndex(
+      (schedule) => schedule.ScheduleId == schedule.ScheduleId
+    );
+    console.log(scheduleIndex);
+    if (scheduleIndex > -1) {
+      this.schedules.splice(scheduleIndex, 1);
+    }
+  }
   deleteSchedule(sche) {
     console.log("delete clicked");
     this.memberAction.deleteSchedule(sche.ScheduleId).subscribe(
       (data: any) => {
-        console.log(data);
+
         this.openSnackBar(data.Message, "ok");
-        // this.schedules.slice()
-        let scheduleIndex = this.schedules.findIndex(
-          (schedule) => schedule.ScheduleId == sche.ScheduleId
-        );
-        console.log(scheduleIndex);
-        if (scheduleIndex > -1) {
-          this.schedules.splice(scheduleIndex, 1);
-        }
+
+        this.sliceSchedule(sche)
       },
       (err) => {
         this.openSnackBar(err.error.Message, "ok");
@@ -52,11 +88,22 @@ export class ScheduleHistoryComponent implements OnInit {
     );
   }
 
+  getActiveSchedules() {
+    this.memberAction.getActiveSchedules().subscribe((data) => {
+      this.schedules = data
+    })
+  }
+
+  getAllSchedules() {
+    this.memberAction.getAllMemberScheduleHistroy().subscribe((data) => {
+      this.allSchedule = data
+      this.columnsToDisplay = ["PickUpAddress", "ScheduleDate", "ScheduleTime", "PickUpMembers"]
+    })
+  }
+
   ngOnInit() {
-    this.route.data.subscribe((data) => {
-      this.schedules = data["schedules"];
-      console.log(this.schedules);
-    });
-    // moment().format("DD MM YY");
+
+    this.getActiveSchedules()
+
   }
 }

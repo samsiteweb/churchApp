@@ -33,7 +33,6 @@ const personalRoutes: Routes = [
       },
       {
         path: "history",
-        resolve: { schedules: ScheduleResolver },
         component: ScheduleHistoryComponent,
       },
     ],
@@ -44,4 +43,4 @@ const personalRoutes: Routes = [
   imports: [RouterModule.forChild(personalRoutes)],
   exports: [RouterModule],
 })
-export class PersonalRoutingModule {}
+export class PersonalRoutingModule { }

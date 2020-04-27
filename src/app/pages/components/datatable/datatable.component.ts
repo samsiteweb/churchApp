@@ -7,6 +7,7 @@ import {
   trigger,
 } from "@angular/animations";
 import { MemberData } from "../../home/shared/models";
+import { FormControl, Validators, Form, FormBuilder } from '@angular/forms';
 
 @Component({
   selector: "app-datatable",
@@ -24,20 +25,61 @@ import { MemberData } from "../../home/shared/models";
   ],
 })
 export class DatatableComponent implements OnInit {
+  updateMemberForm
   toggleData = "true";
-  @Input() dataSource;
+  @Input() tableType;
+  @Input() scheduleActions
+  @Input() dataSource
+  @Input() columnsToDisplay
   @Output() roleToggle = new EventEmitter<any>();
-  columnsToDisplay = ["Name", "Email", "PhoneNumber", "DateCreatedView"];
-  expandedElement: MemberData | null;
-  constructor() {}
+  @Output() memberScheduleAction = new EventEmitter<any>();
+  @Output() deleteAction = new EventEmitter<any>();
+  @Output() notificationAction = new EventEmitter<any>()
+  expandedElement: MemberData | null
+  constructor(private fb: FormBuilder) {
+    this.updateMemberForm = fb.group({
+      AlternativeEmailAddress: ["", Validators.email],
+      AlternativeMobileContact: [""]
+    })
+    setTimeout(() => {
+      this.expandedElement = this.dataSource[0]
+    }, 3000);
+
+  }
+
+  onSubmit(form) {
+    console.log(form.value)
+  }
+
+  actionBtn(actions, schedule) {
+    let eventActions = {
+      ...actions,
+      ScheduleId: schedule.ScheduleId
+    }
+    this.memberScheduleAction.emit(eventActions);
+  }
+
+  deleteSchedule(schedule) {
+    console.log(schedule)
+    this.deleteAction.emit(schedule)
+  }
+
+  ngOnInit(): void {
+
+  }
 
   roleToggled() {
-    console.log(this.toggleData);
     this.roleToggle.emit();
   }
 
-  togData(event, userId, roleId) {
+  togNotification(event) {
+    this.notificationAction.emit(event)
+    console.log(event)
+  }
+
+  togData(event, userId, roleId, source) {
     let data = {
+      source: source,
       userId: userId,
       roleId: roleId,
       isActive: event.checked,
@@ -45,7 +87,6 @@ export class DatatableComponent implements OnInit {
     this.roleToggle.emit(data);
   }
 
-  ngOnInit(): void {
-    console.log(this.dataSource, "datasource");
-  }
+
+
 }

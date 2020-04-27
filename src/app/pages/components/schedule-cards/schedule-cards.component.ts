@@ -8,14 +8,22 @@ import * as moment from "moment";
 export class ScheduleCardsComponent implements OnInit {
   now = moment;
   @Input() schedule: any;
+  @Input() scheduleActions: any;
   @Output() deleteClicked = new EventEmitter<any>();
-  @Output() editClicked = new EventEmitter<any>();
-  constructor() {}
+  @Output() action = new EventEmitter<any>();
+  constructor() {
+  }
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    // console.log(this.schedule, "schdedules")
+  }
 
-  editSchedule() {
-    this.editClicked.emit();
+  actionBtn(actions, schedules) {
+    let eventActions = {
+      ...actions,
+      ScheduleId: schedules.ScheduleId
+    }
+    this.action.emit(eventActions);
   }
   deleteSchedule() {
     this.deleteClicked.emit();

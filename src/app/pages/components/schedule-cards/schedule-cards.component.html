@@ -1,44 +1,28 @@
-<mat-card
-  class="card"
-  style="padding: 5px;"
-  fxLayout="column"
-  fxLayoutAlign="space-between space-between"
->
-  <div fxLayoutAlign="end">
-    <button
-      (click)="editSchedule()"
-      style="color: #a3a2a2;"
-      mat-icon-button
-      aria-label="Example icon-button with a heart icon"
-    >
-      <mat-icon>edit</mat-icon>
+<mat-card class="card" style="padding: 5px;" fxLayout="column" fxLayoutAlign="space-between space-between">
+  <div fxLayoutAlign="start">
+    <mat-menu #appMenu="matMenu">
+      <button mat-menu-item (click)="actionBtn(actions, schedule)"
+        *ngFor="let actions of scheduleActions">{{actions.ScheduleStatus}} Schedule</button>
+    </mat-menu>
+
+    <button [matMenuTriggerFor]="appMenu" mat-icon-button
+      aria-label="Example icon button with a vertical three dot icon">
+      <mat-icon>more_vert</mat-icon>
     </button>
+
+
   </div>
   <div style="margin-top: -20px; padding-bottom: 10px; text-align: center;">
-    <mat-icon
-      style="font-size: 30px; color: #a3a2a2;"
-      aria-hidden="false"
-      aria-label="Example home icon"
-      >schedule
+    <mat-icon style="font-size: 30px; color: #a3a2a2;" aria-hidden="false" aria-label="Example home icon">schedule
     </mat-icon>
   </div>
-  <div
-    style="padding-left: 20px; padding-right: 20px;"
-    fxLayout="column"
-    fxLayoutAlign="center center"
-  >
+  <div style="padding-left: 20px; padding-right: 20px;" fxLayout="column" fxLayoutAlign="center center">
     <div fxLayout="row" fxLayoutGap="10px">
-      <!-- <mat-icon aria-hidden="false" aria-label="Example home icon"
-          >home</mat-icon
-        > -->
       <p style="font-size: 1.5rem;">
         {{ now(schedule.ScheduleDate).format("dddd, MMMM Do YYYY") }}
       </p>
     </div>
     <div fxLayout="row" fxLayoutGap="10px">
-      <!-- <mat-icon aria-hidden="false" aria-label="Example home icon"
-          >home</mat-icon
-        > -->
       <p style="font-size: 1.5rem;">
         {{ now(schedule.ScheduleDate).format("LTS") }}
       </p>
@@ -52,19 +36,13 @@
     <div></div>
   </div>
 
-  <div
-    style="padding-left: 10px;"
-    fxLayout="row"
-    fxLayoutAlign="space-between space-between"
-  >
-    <p><b style="color: #f50057;">Status: </b> <span>Pending</span></p>
+  <div style="padding-left: 10px;" fxLayout="row" fxLayoutAlign="space-between space-between">
+    <p><b style="color: #f50057;">Status: </b> <span
+        [ngStyle]="{'color':schedule.ScheduleStatusInfo.ScheduleStatusColor}"><b>{{schedule.ScheduleStatusInfo.ScheduleStatus}}</b></span>
+    </p>
     <div>
-      <button
-        (click)="deleteSchedule()"
-        mat-icon-button
-        color="warn"
-        aria-label="Example icon-button with a heart icon"
-      >
+      <button (click)="deleteSchedule()" mat-icon-button color="warn"
+        aria-label="Example icon-button with a heart icon">
         <mat-icon>delete</mat-icon>
       </button>
     </div>

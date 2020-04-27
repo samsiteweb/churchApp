@@ -18,11 +18,11 @@ export interface OrgList {
 
 @Injectable()
 export class ScheduleResolver implements Resolve<any> {
-  constructor(private memberService: MemberActionsService) {}
+  constructor(private memberService: MemberActionsService) { }
   resolve(
     route: ActivatedRouteSnapshot,
     state: RouterStateSnapshot
   ): Observable<any> | Promise<any> | any {
-    return this.memberService.getScheduleRide();
+    return this.memberService.getActiveSchedules();
   }
 }

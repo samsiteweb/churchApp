@@ -6,7 +6,6 @@ import { Router, ActivatedRoute } from "@angular/router";
 import { BehaviorSubject } from "rxjs";
 import { MatDialog } from "@angular/material/dialog";
 import { DialogComponent } from "../components/dialog/dialog.component";
-// import { SnackBarComponent } from "src/app/components/snack-bar/snack-bar.component";
 
 @Component({
   selector: "app-login",
@@ -34,7 +33,7 @@ export class LoginComponent implements OnInit {
     private router: Router,
     private route: ActivatedRoute,
     public dialog: MatDialog
-  ) {}
+  ) { }
 
   openSnackBar(message: string, action: string) {
     this._snackBar.open(message, action, {
@@ -42,10 +41,10 @@ export class LoginComponent implements OnInit {
     });
   }
 
-  openDialog(message): void {
+  openDialog(message, type): void {
     const dialogRef = this.dialog.open(DialogComponent, {
       width: "300px",
-      data: { code: this.code, message: message },
+      data: { type: type, code: this.code, message: message },
     });
 
     dialogRef.afterClosed().subscribe((result) => {
@@ -53,13 +52,7 @@ export class LoginComponent implements OnInit {
     });
   }
 
-  // openSnackBar() {
-  //   this._snackBar.openFromComponent(SnackBarComponent, {
-  //     duration: this.durationInSeconds * 1000,
-  //   });
-  // }
-
-  ngOnInit(): void {}
+  ngOnInit(): void { }
 
   onSubmit(authForm) {
     this.requestStart = true;
@@ -79,7 +72,10 @@ export class LoginComponent implements OnInit {
 
           if (err.status == 511) {
             this.openSnackBar(err.error.Message, "ok");
-            this.openDialog(err.error.Message);
+            this.openDialog(
+              err.error.Message,
+              "auth"
+            );
           } else {
             this.router.navigate(["./signup/member"]);
           }

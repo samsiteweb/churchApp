@@ -1,16 +1,22 @@
-export interface MemberData {
-  // UserId: string;
-  // FirstName: string;
-  // LastName: string;
-  // Email: string;
-  // PhoneNumber: string;
-  // IsRoleActive: boolean;
-  // RoleType: number;
-  // RoleId: string;
-  // RoleMeaning: string;
-  // DateCreatedView: string;
-  // DateCreated: string;
 
+export interface TransMember {
+  Name: string
+  Email: string
+  PhoneNumber: string
+  ContactInfo: string
+  IsMemberActive: boolean
+  LastModifiedView: string
+  DateCreatedView: string
+  DateCreated: string
+  LastModified: string
+  MemberId: string
+  AllowMemberToRecieveNotification: boolean
+  AlternativeEmailAddress: string
+  AlternativeMobileContact: string
+
+}
+
+export interface MemberData {
   userId: string;
   Name: string;
   Email: string;

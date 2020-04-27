@@ -1,6 +1,15 @@
 <div style="margin: 50px;">
-  <app-datatable
-    [dataSource]="memberData"
-    (roleToggle)="toggleAction($event)"
-  ></app-datatable>
+  <mat-form-field>
+    <mat-label>View Options</mat-label>
+    <mat-select [(value)]="default" [disableOptionCentering]='true' (selectionChange)="changed($event)">
+      <mat-optgroup *ngFor="let member of Members" [label]="member.type">
+        <mat-option *ngFor="let member of member.group" [value]="member.value">
+          {{member.viewValue}}
+        </mat-option>
+      </mat-optgroup>
+    </mat-select>
+  </mat-form-field>
+  <app-datatable (notificationAction)="notificationAction($event)" [tableType]="'memberManagement'"
+    [dataSource]="memberData" [columnsToDisplay]="columnsToDisplay" (roleToggle)="toggleAction($event)">
+  </app-datatable>
 </div>

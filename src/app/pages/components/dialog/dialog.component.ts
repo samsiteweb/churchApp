@@ -8,6 +8,7 @@ import { LoginComponent } from "../../login/login.component";
 import { AuthServiceService } from "src/app/services/auth-service.service";
 import { MatSnackBar } from "@angular/material/snack-bar";
 import { Router } from "@angular/router";
+import { MemberActionsService } from 'src/app/services/member-actions.service';
 
 @Component({
   selector: "app-dialog",
@@ -21,10 +22,11 @@ export class DialogComponent implements OnInit {
     public dialogRef: MatDialogRef<LoginComponent>,
     @Inject(MAT_DIALOG_DATA) public data: any,
     private authService: AuthServiceService,
-    private router: Router
-  ) {}
+    private router: Router,
+    private memberAction: MemberActionsService
+  ) { }
 
-  ngOnInit(): void {}
+  ngOnInit(): void { }
 
   onNoClick(): void {
     this.dialogRef.close();
@@ -51,5 +53,15 @@ export class DialogComponent implements OnInit {
         this.openSnackBar(err.error.Message, "ok");
       }
     );
+  }
+  confirmDelete() {
+    console.log('request delete')
+    this.memberAction.deleteAccount(this.data.code, this.data.actionType).subscribe((data) => {
+      console.log(data)
+      this.openSnackBar("Delete was successfull", 'ok')
+      this.authService.logoutUser()
+    }, err => {
+      this.openSnackBar(err.error.Message, 'ok')
+    })
   }
 }

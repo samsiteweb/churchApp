@@ -4,7 +4,7 @@ import { CustomBtnComponent } from "./components/custom-btn/custom-btn.component
 import { CustomMaterialModule } from "./sharedMaterialComponent.module";
 import { FlexLayoutModule } from "@angular/flex-layout";
 import { DialogComponent } from "./pages/components/dialog/dialog.component";
-import { FormsModule } from "@angular/forms";
+import { FormsModule, ReactiveFormsModule } from "@angular/forms";
 import { ScheduleCardsComponent } from "./pages/components/schedule-cards/schedule-cards.component";
 import { DatatableComponent } from "./pages/components/datatable/datatable.component";
 
@@ -15,7 +15,7 @@ import { DatatableComponent } from "./pages/components/datatable/datatable.compo
     ScheduleCardsComponent,
     DatatableComponent,
   ],
-  imports: [CommonModule, CustomMaterialModule, FlexLayoutModule, FormsModule],
+  imports: [CommonModule, FormsModule, ReactiveFormsModule, CustomMaterialModule, FlexLayoutModule, FormsModule],
   exports: [
     CommonModule,
     CustomMaterialModule,
@@ -26,4 +26,4 @@ import { DatatableComponent } from "./pages/components/datatable/datatable.compo
     DatatableComponent,
   ],
 })
-export class SharedModule {}
+export class SharedModule { }
