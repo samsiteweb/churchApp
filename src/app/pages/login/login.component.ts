@@ -48,7 +48,7 @@ export class LoginComponent implements OnInit {
     });
 
     dialogRef.afterClosed().subscribe((result) => {
-      console.log("The dialog was closed");
+
     });
   }
 
@@ -56,18 +56,18 @@ export class LoginComponent implements OnInit {
 
   onSubmit(authForm) {
     this.requestStart = true;
-    console.log(authForm);
+
     if (authForm.valid) {
-      console.log("form is valid");
+
       this.authService.logInUser(authForm.value.phoneNumber).subscribe(
         (data) => {
-          console.log(data, "from login");
+
           this.openSnackBar("Authentication successful", "ok");
           this.requestStart = false;
           this.router.navigateByUrl("/home/ride");
         },
         (err) => {
-          console.log(err);
+
           this.requestStart = false;
 
           if (err.status == 511) {

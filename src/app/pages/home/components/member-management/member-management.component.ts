@@ -1,7 +1,6 @@
 import { Component, OnInit } from "@angular/core";
 import { MemberActionsService } from "src/app/services/member-actions.service";
 import { MemberData, TransMember } from "../../shared/models";
-import { map } from "rxjs/operators";
 import { MatSnackBar } from "@angular/material/snack-bar";
 
 
@@ -54,27 +53,28 @@ export class MemberManagementComponent implements OnInit {
     this.memberAction.getAllTransportationMembers().subscribe((data: any) => {
       this.memberData = data;
       this.columnsToDisplay = ["Name", "Email", "PhoneNumber", "DateCreatedView", "IsMemberActive"];
-      console.log(this.memberData);
+
     }, err => {
-      console.log(err)
+
       this.openSnackBar(err.error.Message, 'ok')
       this.memberData = null
     });
   }
 
   notificationAction(body) {
+
     let action = {
       memberId: body.MemberId,
-      allowMemberToRecieveNotification: body.allowMemberToRecieveNotification,
-      alternativeEmailAddress: null,
-      alternativeMobileContact: null
+      allowMemberToRecieveNotification: body.AllowMemberToRecieveNotification,
+      alternativeEmailAddress: body.AlternativeEmailAddress,
+      alternativeMobileContact: body.AlternativeMobileContact
     }
 
-    console.log(action, "action")
+
     this.memberAction.updateMember(action).subscribe((data) => {
-      console.log(data)
+
     }, (err) => {
-      console.log(err)
+
     })
   }
 
@@ -83,9 +83,9 @@ export class MemberManagementComponent implements OnInit {
       .retriveMember()
       .subscribe((data: MemberData[]) => {
         this.memberData = data;
-        console.log(this.memberData);
+
       }, err => {
-        console.log(err, "error from member mangement")
+
         this.openSnackBar(err.error.Message, 'ok')
         this.memberData = null
       });
@@ -98,7 +98,7 @@ export class MemberManagementComponent implements OnInit {
   }
 
   toggleAction(event) {
-    console.log(event);
+
 
     switch (event.source) {
       case "Roles":
@@ -145,13 +145,13 @@ export class MemberManagementComponent implements OnInit {
       .updateRoleStatus(event.userId, event.roleId, event.isActive)
       .subscribe(
         (data: any) => {
-          console.log(data);
+
           this.openSnackBar(data.Message, "ok");
         },
         (err) => {
           this.openSnackBar(err.error.Message, "ok");
           this.getAllMemberData();
-          console.log(err.error.Message);
+
         }
       );
   }

@@ -26,6 +26,10 @@ import { FormControl, Validators, Form, FormBuilder } from '@angular/forms';
 })
 export class DatatableComponent implements OnInit {
   updateMemberForm
+  notificationText
+  updated = false
+  editEmail = false;
+  editPhone = false;
   toggleData = "true";
   @Input() tableType;
   @Input() scheduleActions
@@ -47,8 +51,31 @@ export class DatatableComponent implements OnInit {
 
   }
 
-  onSubmit(form) {
-    console.log(form.value)
+  get email() {
+    return this.updateMemberForm.get('AlternativeEmailAddress')
+  }
+  get phone() {
+    return this.updateMemberForm.get('AlternativeMobileContact')
+  }
+
+  editClicked(source, value) {
+
+    source == 'email' ? this.email.value = "" : this.phone.value = ""
+    source == 'email' ? this.editEmail = true : this.editPhone = true
+    this.updated = true
+  }
+  onSubmit(form, element) {
+    let additionalData = {
+      ...element,
+      AlternativeEmailAddress: this.email.value !== "" ? this.email.value : element.AlternativeEmailAddress,
+      AlternativeMobileContact: this.phone.value !== "" ? this.phone.value : element.AlternativeMobileContact
+    }
+    this.notificationAction.emit(additionalData)
+    this.updated = false
+  }
+
+  clicked(e) {
+
   }
 
   actionBtn(actions, schedule) {
@@ -60,7 +87,7 @@ export class DatatableComponent implements OnInit {
   }
 
   deleteSchedule(schedule) {
-    console.log(schedule)
+
     this.deleteAction.emit(schedule)
   }
 
@@ -73,8 +100,14 @@ export class DatatableComponent implements OnInit {
   }
 
   togNotification(event) {
-    this.notificationAction.emit(event)
-    console.log(event)
+
+    let latest = {
+      ...event,
+      AllowMemberToRecieveNotification: !event.AllowMemberToRecieveNotification
+    }
+
+    this.notificationAction.emit(latest)
+
   }
 
   togData(event, userId, roleId, source) {

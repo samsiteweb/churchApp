@@ -4,9 +4,9 @@
       <mat-tab label="Active Schedules">
         <ng-template matTabContent>
           <div class="schedule-cards" fxLayout="row" fxLayoutGap="20px">
-            <app-schedule-cards style="padding-bottom: 20px;" [scheduleActions]="scheduleActions" [schedule]="schedule"
-              (action)="scheduleAction($event)" (deleteClicked)="deleteSchedule(schedule)"
-              *ngFor="let schedule of schedules">
+            <app-schedule-cards (assignClicked)="opendia(schedule)" [type]="'transport'" style="padding-bottom: 20px;"
+              [scheduleActions]="scheduleActions" [schedule]="schedule" (action)="scheduleAction($event)"
+              (deleteClicked)="deleteSchedule(schedule)" *ngFor="let schedule of schedules">
             </app-schedule-cards>
           </div>
         </ng-template>

@@ -39,7 +39,7 @@ export class MemberActionsService {
   getAllTransportationMembers() {
     return this.httpClient.get(`${this.apiUrl}/Transportation/RetrieveMembers`).pipe(
       map((data: any) => {
-        console.log(data, "ttransport data")
+
         let latestData = []
         data.forEach(resData => {
           let newData: TransMember = {
@@ -71,6 +71,29 @@ export class MemberActionsService {
       `${this.apiUrl}/Transportation/RetrieveUserSchedules`
     );
   }
+  retriveScheduleTransportation() {
+    return this.httpClient.get(`${this.apiUrl}/Transportation/RetrieveScheduleTransportation`)
+  }
+
+  assignScheduleTransportation(body) {
+    return this.httpClient.post(`${this.apiUrl}/Transportation/AssignScheduleToTransportationMember`, body)
+  }
+  retriveScheduleHistoryTranspotation() {
+    return this.httpClient.get(`${this.apiUrl}/Transportation/RetrieveScheduleTransportationHistory`).pipe(map((resData: any) => {
+
+      let newData = []
+      resData.forEach((data: any) => {
+        data = {
+          ...data,
+          ScheduleDate: moment(data.ScheduleDate).format("dddd, MMMM Do YYYY"),
+          ScheduleTime: moment(data.ScheduleDate).format("LTS"),
+        }
+        newData.push(data)
+      })
+
+      return newData
+    }))
+  }
 
   addMemberToTransportationDpart(body) {
     return this.httpClient.post(
@@ -80,6 +103,10 @@ export class MemberActionsService {
 
   retriveMemberStatusList() {
     return this.httpClient.get(`${this.apiUrl}/Transportation/RetrieveMemberStatusList`)
+  }
+
+  retriveMemberStatusTransportation() {
+    return this.httpClient.get(`${this.apiUrl}/Transportation/RetrieveTransportationStatusList`)
   }
 
   deleteFromTransportationDept(userId) {
@@ -92,6 +119,9 @@ export class MemberActionsService {
 
   updateMemberScheduleStatus(statusId, scheduleId) {
     return this.httpClient.get(`${this.apiUrl}/Transportation/UpdateMemberScheduleStatus?statusId=${statusId}&scheduleId=${scheduleId}`)
+  }
+  updateMemberScheduleStatusTransportation(statusId, scheduleId) {
+    return this.httpClient.get(`${this.apiUrl}/Transportation/UpdateTransportationScheduleStatus?statusId=${statusId}&scheduleId=${scheduleId}`)
   }
 
   deleteSchedule(id) {

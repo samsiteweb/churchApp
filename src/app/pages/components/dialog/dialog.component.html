@@ -2,12 +2,24 @@
   <div style="text-align: center;">
     <b>{{ data.message }}</b>
   </div>
-  <mat-form-field appearance="outline" style="width: 100%;">
+  <mat-form-field *ngIf="data.type !== 'transport'" appearance="outline" style="width: 100%;">
     <input matInput [(ngModel)]="data.code" style="text-align: center; font-size: 18px;" />
   </mat-form-field>
+  <mat-form-field *ngIf="data.type === 'transport'" appearance="legacy" style="width: 50%;">
+    <mat-label>Approximated Pickup Time</mat-label>
+    <input matInput type="number" [(ngModel)]="data.time" style="text-align: center; font-size: 18px;" />
+    <p matSuffix><b>mins</b></p>
+    <mat-hint>Ex. 60min = 1hour</mat-hint>
+  </mat-form-field>
+  <mat-form-field *ngIf="data.type === 'transport'" appearance="outline" style="width: 100%;"
+    class="example-full-width">
+    <mat-label>Leave a comment</mat-label>
+    <textarea [(ngModel)]="data.comment" matInput placeholder="Ex. It makes me feel..."></textarea>
+  </mat-form-field>
   <div fxLayout="column" fxLayoutAlign="center center">
-    <app-custom-btn (click)="data.type === 'auth' ? verifyCode(): confirmDelete()" [disabled]="verifyStart"
-      [btnHeight]="'50px'" [btnWidth]="'150px'" [text]="data.type === 'auth' ? 'Verify' : 'Confirm Delete'"
+    <app-custom-btn (click)="data.type === 'auth' ? verifyCode(): data.type === 'transport'? accept(): confirmDelete()"
+      [disabled]="verifyStart" [btnHeight]="'50px'" [btnWidth]="'150px'"
+      [text]="data.type === 'auth' ? 'Verify' : data.type === 'transport'? 'Accept' : 'Confirm Delete'"
       [color]="'accent'" [isloading]="verifyStart" [type]="'button'">
     </app-custom-btn>
   </div>

@@ -40,14 +40,6 @@ export class HomeComponent implements OnInit, OnDestroy {
     this.mobileQuery = media.matchMedia("(max-width: 600px)");
     this._mobileQueryListener = () => changeDetectorRef.detectChanges();
     this.mobileQuery.addListener(this._mobileQueryListener);
-
-    // this.authService.userToken.subscribe((data) => {
-    //   console.log(data);
-    // });
-
-    // this.route.data.subscribe((data) => {
-    //   console.log(data.userInfo, "user info");
-    // });
   }
 
   showFiller = true;
@@ -68,21 +60,21 @@ export class HomeComponent implements OnInit, OnDestroy {
       .subscribe((data) => {
         this.userInfo = data;
         this.dataService.setUserInfo(data);
-        console.log(data, "User Info Data");
+
       });
   }
 
   showInfo(info) {
-    console.log(info);
+
   }
 
   logOutUser() {
     this.authService.logoutUser();
   }
 
-  save() {}
-  undo() {}
-  openSidebar() {}
+  save() { }
+  undo() { }
+  openSidebar() { }
   ngOnDestroy(): void {
     this.mobileQuery.removeListener(this._mobileQueryListener);
     this.subscription.unsubscribe();

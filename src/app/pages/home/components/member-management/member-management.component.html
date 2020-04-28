@@ -3,7 +3,7 @@
     <mat-label>View Options</mat-label>
     <mat-select [(value)]="default" [disableOptionCentering]='true' (selectionChange)="changed($event)">
       <mat-optgroup *ngFor="let member of Members" [label]="member.type">
-        <mat-option *ngFor="let member of member.group" [value]="member.value">
+        <mat-option *ngFor="let member of member.group " [value]="member.value">
           {{member.viewValue}}
         </mat-option>
       </mat-optgroup>

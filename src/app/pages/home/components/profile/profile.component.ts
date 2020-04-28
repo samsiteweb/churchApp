@@ -22,7 +22,7 @@ export class ProfileComponent implements OnInit {
   ) {
     this.dataService.userInfo.subscribe((data) => {
       this.userInfo = data;
-      console.log(this.userInfo);
+
     });
 
     const {
@@ -51,7 +51,7 @@ export class ProfileComponent implements OnInit {
   }
 
   onSubmit(form) {
-    console.log(form);
+
   }
 
   openSnackBar(message: string, action: string) {
@@ -67,13 +67,13 @@ export class ProfileComponent implements OnInit {
     });
 
     dialogRef.afterClosed().subscribe((result) => {
-      console.log("The dialog was closed");
+
     });
   }
 
   requestDeleteAccount(type) {
     this.memberAction.requestDeleteAccount().subscribe((data: any) => {
-      console.log(data)
+
       this.openSnackBar("Request Sent Successfully", "ok")
       this.openDialog(
         data.Message,

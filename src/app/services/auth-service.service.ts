@@ -69,13 +69,13 @@ export class AuthServiceService {
       )
       .pipe(
         tap((data) => {
-          console.log(data);
+
           this.resolveLogin(data);
         }),
         mergeMap((data: any) =>
           this.getUserInfo(data.Token.Token).pipe(
             tap((data) => {
-              console.log(data);
+
             })
           )
         )
@@ -86,7 +86,7 @@ export class AuthServiceService {
     this.phone.subscribe((data) => {
       this.phoneNumber = data;
     });
-    console.log(this.phoneNumber);
+
     return this.httpClient
       .get(
         `${this.apiUrl}/Authenticate/OAuth`,
@@ -94,13 +94,13 @@ export class AuthServiceService {
       )
       .pipe(
         tap((data) => {
-          console.log(data);
+
           this.resolveLogin(data);
         }),
         mergeMap((data: any) =>
           this.getUserInfo(data.Token.Token).pipe(
             tap((data) => {
-              console.log(data);
+
             })
           )
         )
@@ -108,7 +108,7 @@ export class AuthServiceService {
   }
 
   logInUser(phoneNumber) {
-    console.log(phoneNumber);
+
     return this.httpClient
       .get(
         `${this.apiUrl}/Authenticate/OAuth`,
@@ -116,7 +116,7 @@ export class AuthServiceService {
       )
       .pipe(
         tap((data) => {
-          console.log(data);
+
           this.resolveLogin(data);
         })
       );

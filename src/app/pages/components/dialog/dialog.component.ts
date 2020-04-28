@@ -41,26 +41,41 @@ export class DialogComponent implements OnInit {
     this.verifyStart = true;
     this.authService.authHigherUser(this.data.code).subscribe(
       (data) => {
-        console.log(data, "from login");
+
         this.openSnackBar("Authentication successful", "ok");
         this.verifyStart = false;
         this.onNoClick();
         this.router.navigateByUrl("/home/ride");
       },
       (err) => {
-        console.log(err);
+
         this.verifyStart = false;
         this.openSnackBar(err.error.Message, "ok");
       }
     );
   }
-  confirmDelete() {
-    console.log('request delete')
-    this.memberAction.deleteAccount(this.data.code, this.data.actionType).subscribe((data) => {
+
+  accept() {
+    console.log("accepted")
+    console.log(this.data.comment, this.data.time)
+    let body = {
+      scheduleId: this.data.actionType,
+      approximatedPickupTime_Min: this.data.time,
+      driverMessage: this.data.comment
+    }
+    this.memberAction.assignScheduleTransportation(body).subscribe((data) => {
       console.log(data)
+    })
+  }
+  confirmDelete() {
+    this.verifyStart = true;
+    this.memberAction.deleteAccount(this.data.code, this.data.actionType).subscribe((data) => {
+
       this.openSnackBar("Delete was successfull", 'ok')
       this.authService.logoutUser()
+      this.verifyStart = false;
     }, err => {
+      this.verifyStart = false;
       this.openSnackBar(err.error.Message, 'ok')
     })
   }

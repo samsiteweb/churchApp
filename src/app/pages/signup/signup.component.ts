@@ -43,14 +43,14 @@ export class SignupComponent implements OnInit {
     private route: Router
   ) {
     this.router.data.subscribe((data) => {
-      console.log(data["orgList"]);
+
       this.orgList = data["orgList"];
     });
   }
 
   ngOnInit(): void {
     this.formType = this.router.snapshot.paramMap.get("type");
-    console.log(this.formType);
+
   }
 
   openSnackBar(message: string, action: string) {
@@ -61,12 +61,12 @@ export class SignupComponent implements OnInit {
 
   onSubmit(regForm) {
     this.formSubmitted = true;
-    console.log(regForm);
+
     if (regForm.valid) {
-      // console.log()
+
       this.regService.registerUser(regForm.value, this.formType).subscribe(
         (res) => {
-          console.log(res);
+
           this.openSnackBar("Registration Successful", "ok");
           setTimeout(() => {
             this.route.navigateByUrl("login");
@@ -74,7 +74,7 @@ export class SignupComponent implements OnInit {
           }, 3000);
         },
         (err) => {
-          console.log(err);
+
           this.openSnackBar(err.error.Message, "ok");
           this.formSubmitted = false;
         }
@@ -89,19 +89,19 @@ export class SignupComponent implements OnInit {
     return control.get(controlName).hasError("required")
       ? "*Field is required"
       : control.get(controlName).hasError("pattern")
-      ? `*Not a valid ${controlName}`
-      : control.get(controlName).hasError("alreadyInUse")
-      ? `*This ${controlName} is already in use`
-      : "";
+        ? `*Not a valid ${controlName}`
+        : control.get(controlName).hasError("alreadyInUse")
+          ? `*This ${controlName} is already in use`
+          : "";
   }
   getErrorAddressGroup(controlName) {
     let control = this.regForm;
     return control.get(["address", controlName]).hasError("required")
       ? "*Field is required"
       : control.get(["address", controlName]).hasError("pattern")
-      ? `*Not a valid ${controlName}`
-      : control.get(["address", controlName]).hasError("alreadyInUse")
-      ? `*This ${controlName} is already in use`
-      : "";
+        ? `*Not a valid ${controlName}`
+        : control.get(["address", controlName]).hasError("alreadyInUse")
+          ? `*This ${controlName} is already in use`
+          : "";
   }
 }

@@ -37,9 +37,10 @@
   </div>
 
   <div style="padding-left: 10px;" fxLayout="row" fxLayoutAlign="space-between space-between">
-    <p><b style="color: #f50057;">Status: </b> <span
+    <p *ngIf="type !== 'transport'"><b style="color: #f50057;">Status: </b> <span
         [ngStyle]="{'color':schedule.ScheduleStatusInfo.ScheduleStatusColor}"><b>{{schedule.ScheduleStatusInfo.ScheduleStatus}}</b></span>
     </p>
+    <button *ngIf="type == 'transport'" (click)="assign()" mat-stroked-button color="warn">Assign Schedule</button>
     <div>
       <button (click)="deleteSchedule()" mat-icon-button color="warn"
         aria-label="Example icon-button with a heart icon">

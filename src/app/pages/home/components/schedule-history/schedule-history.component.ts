@@ -21,14 +21,13 @@ export class ScheduleHistoryComponent implements OnInit {
     private route: ActivatedRoute,
     private memberAction: MemberActionsService
   ) {
-    // add this 2 of 4
-    console.log("hello world", this.now().format("dd yy mm")); // add this 3 of 4
-    console.log(this.now().add(7, "days").format()); // add this 4of 4
+
+
     this.getAllSchedules()
     this.retriveMemberStatusList()
   }
   scheduleAction(event) {
-    console.log(event.ScheduleStatus, 'event')
+
     switch (event.ScheduleStatus) {
       case 'Cancel':
         this.memberAction.updateMemberScheduleStatus(event.ScheduleStatusId, event.ScheduleId)
@@ -43,7 +42,7 @@ export class ScheduleHistoryComponent implements OnInit {
   }
 
   editSchedule(schedule) {
-    console.log("edit clicked");
+
   }
 
   retriveMemberStatusList() {
@@ -68,13 +67,13 @@ export class ScheduleHistoryComponent implements OnInit {
     let scheduleIndex = this.schedules.findIndex(
       (schedule) => schedule.ScheduleId == schedule.ScheduleId
     );
-    console.log(scheduleIndex);
+
     if (scheduleIndex > -1) {
       this.schedules.splice(scheduleIndex, 1);
     }
   }
   deleteSchedule(sche) {
-    console.log("delete clicked");
+
     this.memberAction.deleteSchedule(sche.ScheduleId).subscribe(
       (data: any) => {
 

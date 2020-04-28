@@ -1,10 +1,8 @@
-<table mat-table [dataSource]="dataSource" multiTemplateDataRows class="mat-elevation-z8">
+<table mat-table [dataSource]="dataSource" multiTemplateDataRows (click)="clicked($event)" class="mat-elevation-z8">
   <ng-container matColumnDef="{{ column }}" *ngFor="let column of columnsToDisplay">
     <th mat-header-cell *matHeaderCellDef>{{ column }}</th>
     <td mat-cell *matCellDef="let element">{{ element[column] }}</td>
   </ng-container>
-
-  <!-- Expanded Content Column - The detail row is made up of this one column that spans across all columns -->
   <ng-container matColumnDef="expandedDetail">
     <td mat-cell *matCellDef="let element" [attr.colspan]="columnsToDisplay.length">
       <div class="example-element-detail" [@detailExpand]="element == expandedElement ? 'expanded' : 'collapsed'">
@@ -49,13 +47,12 @@
                 </p>
                 <div>
                   <span>
-                    <mat-slide-toggle (change)="togNotification(element)"
-                      [checked]="element.AllowMemberToRecieveNotification">
-                      <b>{{element.AllowMemberToRecieveNotification ? 'Active' : 'Inactive' }}</b>
+                    <mat-slide-toggle [checked]="element.AllowMemberToRecieveNotification"
+                      (change)="togNotification(element)">
+                      <b></b>
                     </mat-slide-toggle>
                   </span>
                 </div>
-
               </div>
               <div>
                 <p>
@@ -72,26 +69,34 @@
               </div>
 
               <form class="example-form" *ngIf="element.MemberId" [formGroup]="updateMemberForm"
-                (ngSubmit)="onSubmit(updateMemberForm)">
+                (ngSubmit)="onSubmit(updateMemberForm, element)">
                 <p>
                   <b>Update Member Info</b><br /><span>
-                    <!-- <mat-hint>Slide to add or remove member</mat-hint> -->
                   </span>
                 </p>
-                <mat-form-field class="example-full-width" style="margin-right: 5px;">
-                  <mat-label>Alternative Email</mat-label>
-                  <input matInput formControlName="AlternativeEmailAddress" placeholder="Ex. pat@example.com">
-
-
-                </mat-form-field>
-                <mat-form-field class="example-full-width">
-                  <mat-label>Alternative Phone Number</mat-label>
-                  <input matInput formControlName="AlternativeMobileContact">
-
-
-                </mat-form-field>
-                <button mat-flat-button color="warn" type='submit' (click)="togNotification()">Update Record</button>
-
+                <p><b>Alt Phone: </b>{{element.AlternativeMobileContact}} <button mat-icon-button color="accent"
+                    aria-label="Example icon-button with a heart icon" type="button"
+                    (click)="editClicked('phone', element.AlternativeMobileContact)">
+                    <mat-icon>edit</mat-icon>
+                  </button> <br /> <span>
+                    <b>Alt Email: </b>{{element.AlternativeEmailAddress}} <button mat-icon-button color="accent"
+                      aria-label="Example icon-button with a heart icon"
+                      (click)="editClicked('email', element.AlternativeEmailAddress)" type="button">
+                      <mat-icon>edit</mat-icon>
+                    </button></span></p>
+                <div *ngIf="updated">
+                  <mat-form-field *ngIf="editEmail" class="example-full-width" style="margin-right: 5px; width: 250px;">
+                    <mat-label>Alternative Email</mat-label>
+                    <input matInput formControlName="AlternativeEmailAddress" placeholder="Ex. pat@example.com">
+                  </mat-form-field>
+                  <mat-form-field *ngIf="editPhone" class="example-full-width">
+                    <mat-label>Alternative Phone Number</mat-label>
+                    <input matInput formControlName="AlternativeMobileContact">
+                  </mat-form-field>
+                  <button mat-mini-fab color="warn" type='submit' aria-label="Example icon-button with a heart icon">
+                    <mat-icon>done_all</mat-icon>
+                  </button>
+                </div>
               </form>
 
             </div>

@@ -16,6 +16,7 @@ import { NotificationsComponent } from "./components/notifications/notifications
 import { OwlDateTimeModule, OwlNativeDateTimeModule } from "ng-pick-datetime";
 import { ScheduleResolver } from "src/app/services/interceptors/schedule.resolver";
 import { MemberManagementComponent } from "./components/member-management/member-management.component";
+import { ScheduleManagementComponent } from './components/schedule-management/schedule-management.component';
 @NgModule({
   declarations: [
     HomeComponent,
@@ -25,6 +26,7 @@ import { MemberManagementComponent } from "./components/member-management/member
     ProfileComponent,
     NotificationsComponent,
     MemberManagementComponent,
+    ScheduleManagementComponent,
   ],
   imports: [
     CommonModule,

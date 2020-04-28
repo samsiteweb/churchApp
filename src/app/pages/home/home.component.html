@@ -1,13 +1,5 @@
-<div
-  *ngIf="userInfo"
-  class="example-container"
-  [class.example-is-mobile]="mobileQuery.matches"
->
-  <mat-toolbar
-    style="min-height: 56px;"
-    color="accent"
-    fxLayoutAlign="space-between center"
-  >
+<div *ngIf="userInfo" class="example-container" [class.example-is-mobile]="mobileQuery.matches">
+  <mat-toolbar style="min-height: 56px;" color="accent" fxLayoutAlign="space-between center">
     <div fxLayout="row" fxLayoutAlign="center center">
       <button mat-icon-button (click)="snav.toggle()">
         <mat-icon>menu</mat-icon>
@@ -29,7 +21,8 @@
         </button>
       </mat-menu>
       <button mat-button [matMenuTriggerFor]="beforeMenu">
-        <span fxHide.lt-sm>Actions</span><mat-icon>more_vert</mat-icon>
+        <span fxHide.lt-sm>Actions</span>
+        <mat-icon>more_vert</mat-icon>
       </button>
       <mat-menu #beforeMenu="matMenu" xPosition="before">
         <button mat-menu-item routerLink="/home/profile">
@@ -42,23 +35,10 @@
     </div>
   </mat-toolbar>
 
-  <mat-sidenav-container
-    class="example-sidenav-container"
-    [style.marginTop.px]="mobileQuery.matches ? 0 : 0"
-  >
-    <mat-sidenav
-      style="width: 250px;"
-      #snav
-      opened
-      [mode]="mobileQuery.matches ? 'over' : 'side'"
-      [fixedInViewport]="mobileQuery.matches"
-      fixedTopGap="56"
-    >
-      <mat-nav-list
-        style="width: 100%;"
-        fxLayout="column"
-        fxLayoutAlign="center center"
-      >
+  <mat-sidenav-container class="example-sidenav-container" [style.marginTop.px]="mobileQuery.matches ? 0 : 0">
+    <mat-sidenav style="width: 250px;" #snav opened [mode]="mobileQuery.matches ? 'over' : 'side'"
+      [fixedInViewport]="mobileQuery.matches" fixedTopGap="56">
+      <mat-nav-list style="width: 100%;" fxLayout="column" fxLayoutAlign="center center">
         <div style="padding: 20px;" routerLink="/home/profile">
           <ngx-avatar [name]="userInfo.FullName"></ngx-avatar>
         </div>
@@ -71,7 +51,13 @@
           <a matLine routerLink="/home/ride">Schedule Ride</a>
         </mat-list-item>
         <mat-list-item>
-          <a matLine routerLink="/home/history">History</a>
+          <a matLine routerLink="/home/history">Personal Schedule</a>
+          <button mat-icon-button class="mat-list-icon">
+            <mat-icon>history</mat-icon>
+          </button>
+        </mat-list-item>
+        <mat-list-item>
+          <a matLine routerLink="/home/transport-management">Member Management </a>
           <button mat-icon-button class="mat-list-icon">
             <mat-icon>history</mat-icon>
           </button>

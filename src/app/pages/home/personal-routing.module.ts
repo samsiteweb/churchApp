@@ -7,6 +7,7 @@ import { ProfileComponent } from "./components/profile/profile.component";
 import { NotificationsComponent } from "./components/notifications/notifications.component";
 import { ScheduleResolver } from "src/app/services/interceptors/schedule.resolver";
 import { MemberManagementComponent } from "./components/member-management/member-management.component";
+import { ScheduleManagementComponent } from './components/schedule-management/schedule-management.component';
 // import { ScheduleRideComponent } from "./components/schedule-ride/schedule-ride.component";
 
 const personalRoutes: Routes = [
@@ -18,6 +19,10 @@ const personalRoutes: Routes = [
       {
         path: "ride",
         component: ScheduleRideComponent,
+      },
+      {
+        path: "transport-management",
+        component: ScheduleManagementComponent,
       },
       {
         path: "profile",

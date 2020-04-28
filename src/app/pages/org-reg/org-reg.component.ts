@@ -26,18 +26,18 @@ export class OrgRegComponent implements OnInit {
     private fb: FormBuilder,
     private regService: RegistrationService,
     private router: Router
-  ) {}
+  ) { }
 
-  ngOnInit(): void {}
+  ngOnInit(): void { }
 
   onSubmit(orgForm) {
     this.formSubmitted = true;
-    console.log(orgForm);
+
     if (orgForm.valid) {
-      console.log(orgForm.value);
+
       this.regService.registerOrg(orgForm.value).subscribe(
         (res) => {
-          console.log(res);
+
           this.openSnackBar(res["Message"], "Ok");
 
           setTimeout(() => {
@@ -66,9 +66,9 @@ export class OrgRegComponent implements OnInit {
     return control.get(controlName).hasError("required")
       ? "*Field is required"
       : control.get(controlName).hasError("pattern")
-      ? `*Not a valid ${controlName}`
-      : control.get(controlName).hasError("alreadyInUse")
-      ? `*This ${controlName} is already in use`
-      : "";
+        ? `*Not a valid ${controlName}`
+        : control.get(controlName).hasError("alreadyInUse")
+          ? `*This ${controlName} is already in use`
+          : "";
   }
 }

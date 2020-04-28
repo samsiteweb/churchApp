@@ -21,7 +21,7 @@ export class ScheduleRideComponent implements OnInit {
   ) {
     this.dataService.userInfo.subscribe((data) => {
       this.userInfo = data;
-      console.log(this.userInfo);
+
     });
 
     const {
@@ -60,9 +60,9 @@ export class ScheduleRideComponent implements OnInit {
   onSubmit(form) {
     this.isSubmitted = true;
     if (this.rideForm.valid) {
-      console.log(form.value);
+
       this.memberService.scheduleRide(form.value).subscribe((res) => {
-        console.log(res);
+
       });
     }
   }
@@ -72,20 +72,20 @@ export class ScheduleRideComponent implements OnInit {
     return control.get(controlName).hasError("required")
       ? "*Field is required"
       : control.get(controlName).hasError("pattern")
-      ? `*Not a valid ${controlName}`
-      : control.get(controlName).hasError("alreadyInUse")
-      ? `*This ${controlName} is already in use`
-      : "";
+        ? `*Not a valid ${controlName}`
+        : control.get(controlName).hasError("alreadyInUse")
+          ? `*This ${controlName} is already in use`
+          : "";
   }
   getErrorMessage2(controlName) {
     let control = this.rideForm;
     return control.get(["newAddress", controlName]).hasError("required")
       ? "*Field is required"
       : control.get(["newAddress", controlName]).hasError("pattern")
-      ? `*Not a valid ${controlName}`
-      : control.get(["newAddress", controlName]).hasError("alreadyInUse")
-      ? `*This ${controlName} is already in use`
-      : "";
+        ? `*Not a valid ${controlName}`
+        : control.get(["newAddress", controlName]).hasError("alreadyInUse")
+          ? `*This ${controlName} is already in use`
+          : "";
   }
-  ngOnInit(): void {}
+  ngOnInit(): void { }
 }
