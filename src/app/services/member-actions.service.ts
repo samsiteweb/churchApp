@@ -80,7 +80,6 @@ export class MemberActionsService {
   }
   retriveScheduleHistoryTranspotation() {
     return this.httpClient.get(`${this.apiUrl}/Transportation/RetrieveScheduleTransportationHistory`).pipe(map((resData: any) => {
-
       let newData = []
       resData.forEach((data: any) => {
         data = {

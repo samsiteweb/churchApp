@@ -3,6 +3,7 @@ import { ActivatedRoute } from "@angular/router";
 import * as moment from "moment";
 import { MemberActionsService } from "src/app/services/member-actions.service";
 import { MatSnackBar } from "@angular/material/snack-bar";
+import { ModalserviceService } from 'src/app/services/modalservice.service';
 
 @Component({
   selector: "app-schedule-history",
@@ -19,6 +20,7 @@ export class ScheduleHistoryComponent implements OnInit {
   constructor(
     private _snackBar: MatSnackBar,
     private route: ActivatedRoute,
+    private modalService: ModalserviceService,
     private memberAction: MemberActionsService
   ) {
 
@@ -27,13 +29,14 @@ export class ScheduleHistoryComponent implements OnInit {
     this.retriveMemberStatusList()
   }
   scheduleAction(event) {
-
     switch (event.ScheduleStatus) {
       case 'Cancel':
         this.memberAction.updateMemberScheduleStatus(event.ScheduleStatusId, event.ScheduleId)
-          .subscribe((data) => {
+          .subscribe((data: any) => {
             this.sliceSchedule({ ScheduleId: event.ScheduleId })
+            this.modalService.toastModal('success', data.Message, "top-end")
           }, err => {
+            this.modalService.toastModal('error', err.error.Message, "top-end")
           })
         break;
       default:
@@ -48,6 +51,9 @@ export class ScheduleHistoryComponent implements OnInit {
   retriveMemberStatusList() {
     this.memberAction.retriveMemberStatusList().subscribe((data: any) => {
       this.scheduleActions = data
+
+    }, err => {
+      this.modalService.toastModal('success', err.error.Message, "top-end")
     })
   }
 
@@ -58,11 +64,6 @@ export class ScheduleHistoryComponent implements OnInit {
     return this.tabLoadTimes[index];
   }
 
-  openSnackBar(message: string, action: string) {
-    this._snackBar.open(message, action, {
-      duration: 3000,
-    });
-  }
   sliceSchedule(schedule) {
     let scheduleIndex = this.schedules.findIndex(
       (schedule) => schedule.ScheduleId == schedule.ScheduleId
@@ -73,16 +74,13 @@ export class ScheduleHistoryComponent implements OnInit {
     }
   }
   deleteSchedule(sche) {
-
     this.memberAction.deleteSchedule(sche.ScheduleId).subscribe(
       (data: any) => {
-
-        this.openSnackBar(data.Message, "ok");
-
         this.sliceSchedule(sche)
+        this.modalService.toastModal('success', 'Schedule deleted successfully', "top-end")
       },
       (err) => {
-        this.openSnackBar(err.error.Message, "ok");
+        this.modalService.toastModal('error', err.error.Message, "top-end")
       }
     );
   }
@@ -90,6 +88,8 @@ export class ScheduleHistoryComponent implements OnInit {
   getActiveSchedules() {
     this.memberAction.getActiveSchedules().subscribe((data) => {
       this.schedules = data
+    }, err => {
+      this.modalService.toastModal('error', err.error.Message, "top-end")
     })
   }
 
@@ -97,6 +97,8 @@ export class ScheduleHistoryComponent implements OnInit {
     this.memberAction.getAllMemberScheduleHistroy().subscribe((data) => {
       this.allSchedule = data
       this.columnsToDisplay = ["PickUpAddress", "ScheduleDate", "ScheduleTime", "PickUpMembers"]
+    }, err => {
+      this.modalService.toastModal('error', err.error.Message, "top-end")
     })
   }
 

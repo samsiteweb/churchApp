@@ -21,6 +21,7 @@ import { MatTableModule } from "@angular/material/table";
 import { MatButtonToggleModule } from "@angular/material/button-toggle";
 import { MatSlideToggleModule } from "@angular/material/slide-toggle";
 import { MatTabsModule } from '@angular/material/tabs';
+
 /**
  * NgModule that includes all Material modules that are required to serve the demo-app.
  */

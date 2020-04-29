@@ -5,8 +5,9 @@
         <mat-icon>menu</mat-icon>
       </button>
       <h1>{{ userInfo.OrganizationName }}</h1>
-    </div>
 
+    </div>
+    <h1>{{pageTitle}}</h1>
     <div>
       <!-- <button mat-button [matMenuTriggerFor]="aboveMenu">
         <span fxHide.lt-sm>Notifications</span
@@ -25,7 +26,7 @@
         <mat-icon>more_vert</mat-icon>
       </button>
       <mat-menu #beforeMenu="matMenu" xPosition="before">
-        <button mat-menu-item routerLink="/home/profile">
+        <button mat-menu-item (click)='pageTitle = "Profile Page"' routerLink="/home/profile">
           <mat-icon>account_box</mat-icon> <span>View profile</span>
         </button>
         <button mat-menu-item (click)="logOutUser()">
@@ -34,36 +35,37 @@
       </mat-menu>
     </div>
   </mat-toolbar>
+  <app-loader></app-loader>
 
   <mat-sidenav-container class="example-sidenav-container" [style.marginTop.px]="mobileQuery.matches ? 0 : 0">
     <mat-sidenav style="width: 250px;" #snav opened [mode]="mobileQuery.matches ? 'over' : 'side'"
       [fixedInViewport]="mobileQuery.matches" fixedTopGap="56">
       <mat-nav-list style="width: 100%;" fxLayout="column" fxLayoutAlign="center center">
-        <div style="padding: 20px;" routerLink="/home/profile">
+        <div style="padding: 20px;" (click)='pageTitle = "Profile Page"' routerLink="/home/profile">
           <ngx-avatar [name]="userInfo.FullName"></ngx-avatar>
         </div>
         <p>{{ userInfo.Email }}</p>
         <h3 matSubheader>Events</h3>
-        <mat-list-item>
+        <mat-list-item routerLink="/home/ride" (click)='pageTitle = "Schedule Ride"'>
           <button mat-icon-button class="mat-list-icon">
             <mat-icon>departure_board</mat-icon>
           </button>
-          <a matLine routerLink="/home/ride">Schedule Ride</a>
+          <a matLine (click)='pageTitle = "Schedule Ride"'>Schedule Ride</a>
         </mat-list-item>
-        <mat-list-item>
-          <a matLine routerLink="/home/history">Personal Schedule</a>
+        <mat-list-item routerLink="/home/history" (click)='pageTitle = "Schedule Manager"'>
+          <a matLine>Schedules Manager</a>
           <button mat-icon-button class="mat-list-icon">
             <mat-icon>history</mat-icon>
           </button>
         </mat-list-item>
-        <mat-list-item>
-          <a matLine routerLink="/home/transport-management">Member Management </a>
+        <mat-list-item routerLink="/home/transport-management" (click)='pageTitle = "Member Manager"'>
+          <a matLine>Member Management </a>
           <button mat-icon-button class="mat-list-icon">
             <mat-icon>history</mat-icon>
           </button>
         </mat-list-item>
-        <mat-list-item>
-          <a matLine routerLink="/home/member">Retrive Members</a>
+        <mat-list-item routerLink="/home/member" (click)='pageTitle = "Manage Transport Members"'>
+          <a matLine>Transport Department</a>
           <button mat-icon-button class="mat-list-icon">
             <mat-icon>history</mat-icon>
           </button>

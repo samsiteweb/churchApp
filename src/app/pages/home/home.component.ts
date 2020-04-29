@@ -13,6 +13,7 @@ import { Subscription } from "rxjs";
 })
 export class HomeComponent implements OnInit, OnDestroy {
   userInfo: any;
+  pageTitle: string
   subscription: Subscription;
   subscription2: Subscription;
   mobileQuery: MediaQueryList;

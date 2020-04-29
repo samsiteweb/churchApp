@@ -9,6 +9,7 @@ import { AuthServiceService } from "src/app/services/auth-service.service";
 import { MatSnackBar } from "@angular/material/snack-bar";
 import { Router } from "@angular/router";
 import { MemberActionsService } from 'src/app/services/member-actions.service';
+import { ModalserviceService } from 'src/app/services/modalservice.service';
 
 @Component({
   selector: "app-dialog",
@@ -18,7 +19,7 @@ import { MemberActionsService } from 'src/app/services/member-actions.service';
 export class DialogComponent implements OnInit {
   verifyStart: boolean = false;
   constructor(
-    private _snackBar: MatSnackBar,
+    private modalService: ModalserviceService,
     public dialogRef: MatDialogRef<LoginComponent>,
     @Inject(MAT_DIALOG_DATA) public data: any,
     private authService: AuthServiceService,
@@ -31,31 +32,27 @@ export class DialogComponent implements OnInit {
   onNoClick(): void {
     this.dialogRef.close();
   }
-  openSnackBar(message: string, action: string) {
-    this._snackBar.open(message, action, {
-      duration: 3000,
-    });
-  }
+
 
   verifyCode() {
     this.verifyStart = true;
     this.authService.authHigherUser(this.data.code).subscribe(
-      (data) => {
-
-        this.openSnackBar("Authentication successful", "ok");
+      (data: any) => {
         this.verifyStart = false;
         this.onNoClick();
         this.router.navigateByUrl("/home/ride");
+
       },
       (err) => {
-
+        this.modalService.toastModal('error', err.error.Message, "top-end")
         this.verifyStart = false;
-        this.openSnackBar(err.error.Message, "ok");
+
       }
     );
   }
 
   accept() {
+    this.verifyStart = true;
     console.log("accepted")
     console.log(this.data.comment, this.data.time)
     let body = {
@@ -63,20 +60,30 @@ export class DialogComponent implements OnInit {
       approximatedPickupTime_Min: this.data.time,
       driverMessage: this.data.comment
     }
-    this.memberAction.assignScheduleTransportation(body).subscribe((data) => {
-      console.log(data)
+    this.memberAction.assignScheduleTransportation(body).subscribe((data: any) => {
+      this.verifyStart = false
+      this.modalService.toastModal('success', data.Message, "top-end")
+      this.onNoClick();
+    }, err => {
+      this.modalService.toastModal('error', err.error.Message, "top-end")
+      this.verifyStart = false
+
     })
   }
   confirmDelete() {
     this.verifyStart = true;
-    this.memberAction.deleteAccount(this.data.code, this.data.actionType).subscribe((data) => {
+    this.memberAction.deleteAccount(this.data.code, this.data.actionType).subscribe((data: any) => {
 
-      this.openSnackBar("Delete was successfull", 'ok')
+
       this.authService.logoutUser()
       this.verifyStart = false;
+      this.modalService.toastModal('success', data.Message, "top-end")
+      this.onNoClick();
     }, err => {
       this.verifyStart = false;
-      this.openSnackBar(err.error.Message, 'ok')
+
+      this.modalService.toastModal('error', err.error.Message, "top-end")
+
     })
   }
 }

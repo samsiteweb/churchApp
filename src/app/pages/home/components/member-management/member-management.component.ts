@@ -2,6 +2,7 @@ import { Component, OnInit } from "@angular/core";
 import { MemberActionsService } from "src/app/services/member-actions.service";
 import { MemberData, TransMember } from "../../shared/models";
 import { MatSnackBar } from "@angular/material/snack-bar";
+import { ModalserviceService } from 'src/app/services/modalservice.service';
 
 
 @Component({
@@ -10,9 +11,9 @@ import { MatSnackBar } from "@angular/material/snack-bar";
   styleUrls: ["./member-management.component.scss"],
 })
 export class MemberManagementComponent implements OnInit {
-  memberData: any
-  transportMemberData: TransMember[]
-  default = "all"
+  memberData: any;
+  transportMemberData: TransMember[];
+  default = "all";
   Members = [
     {
       type: 'Member',
@@ -26,11 +27,12 @@ export class MemberManagementComponent implements OnInit {
         { value: 'trans', viewValue: 'View Members' },
       ]
     },
-  ]
+  ];
   columnsToDisplay = ["Name", "Email", "PhoneNumber", "DateCreatedView"];
   constructor(
-    private _snackBar: MatSnackBar,
-    private memberAction: MemberActionsService
+
+    private memberAction: MemberActionsService,
+    private modalService: ModalserviceService
   ) {
     this.getAllMemberData();
   }
@@ -38,10 +40,10 @@ export class MemberManagementComponent implements OnInit {
   changed(event) {
     switch (event.value) {
       case 'all':
-        this.getAllMemberData()
+        this.getAllMemberData();
         break;
       case 'trans':
-        this.getAllTransportationMembers()
+        this.getAllTransportationMembers();
         break;
 
       default:
@@ -55,9 +57,8 @@ export class MemberManagementComponent implements OnInit {
       this.columnsToDisplay = ["Name", "Email", "PhoneNumber", "DateCreatedView", "IsMemberActive"];
 
     }, err => {
-
-      this.openSnackBar(err.error.Message, 'ok')
-      this.memberData = null
+      this.modalService.toastModal('error', err.error.Message, 'top-end');
+      this.memberData = null;
     });
   }
 
@@ -68,14 +69,14 @@ export class MemberManagementComponent implements OnInit {
       allowMemberToRecieveNotification: body.AllowMemberToRecieveNotification,
       alternativeEmailAddress: body.AlternativeEmailAddress,
       alternativeMobileContact: body.AlternativeMobileContact
-    }
+    };
 
 
-    this.memberAction.updateMember(action).subscribe((data) => {
-
+    this.memberAction.updateMember(action).subscribe((data: any) => {
+      this.modalService.toastModal('success', data.Message, 'bottom');
     }, (err) => {
-
-    })
+      this.modalService.toastModal('error', err.error.Message, 'top-end');
+    });
   }
 
   getAllMemberData() {
@@ -86,29 +87,23 @@ export class MemberManagementComponent implements OnInit {
 
       }, err => {
 
-        this.openSnackBar(err.error.Message, 'ok')
-        this.memberData = null
+        this.modalService.toastModal('error', err.error.Message, 'top-end');
+        this.memberData = null;
       });
   }
 
-  openSnackBar(message: string, action: string) {
-    this._snackBar.open(message, action, {
-      duration: 3000,
-    });
-  }
 
   toggleAction(event) {
 
-
     switch (event.source) {
       case "Roles":
-        this.updateRoleStatus(event)
+        this.updateRoleStatus(event);
         break;
       case "Transport":
         if (event.isActive) {
-          this.addToTransDept(event)
+          this.addToTransDept(event);
         } else {
-          this.removeFromTransport(event)
+          this.removeFromTransport(event);
         }
 
       default:
@@ -118,10 +113,10 @@ export class MemberManagementComponent implements OnInit {
   }
   removeFromTransport(event) {
     this.memberAction.deleteFromTransportationDept(event.userId).subscribe((data: any) => {
-      this.openSnackBar(data.Message, 'ok')
+      this.modalService.toastModal('success', data.Message, 'top-end');
     }, err => {
-      this.openSnackBar(err.error.Message, 'ok')
-    })
+      this.modalService.toastModal('error', err.error.Message, 'top-end');
+    });
   }
 
   addToTransDept(event) {
@@ -130,12 +125,12 @@ export class MemberManagementComponent implements OnInit {
       allowMemberToRecieveNotification: true,
       alternativeEmailAddress: null,
       alternativeMobileContact: null
-    }
+    };
     this.memberAction.addMemberToTransportationDpart(body).subscribe((data: any) => {
-      this.openSnackBar(data.Message, 'ok')
+      this.modalService.toastModal('success', data.Message, 'bottom');
     }, err => {
-      this.openSnackBar(err.error.Message, 'ok')
-    })
+      this.modalService.toastModal('error', err.error.Message, 'top-end');
+    });
   }
 
 
@@ -146,10 +141,10 @@ export class MemberManagementComponent implements OnInit {
       .subscribe(
         (data: any) => {
 
-          this.openSnackBar(data.Message, "ok");
+          this.modalService.toastModal('success', data.Message, 'bottom');
         },
         (err) => {
-          this.openSnackBar(err.error.Message, "ok");
+          this.modalService.toastModal('error', err.error.Message, 'top-end');
           this.getAllMemberData();
 
         }

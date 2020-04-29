@@ -11,14 +11,16 @@ import {
   storageNamesEnum,
   getStorageName,
 } from "../auth-service.service";
+import { TopLoaderService } from '../top-loader.service';
+import { finalize } from 'rxjs/operators';
 @Injectable()
 export class AuthInterceptor implements HttpInterceptor {
-  constructor(private authService: AuthServiceService) { }
+  constructor(private authService: AuthServiceService, private loaderService: TopLoaderService) { }
   intercept(
     request: HttpRequest<any>,
     next: HttpHandler
   ): Observable<HttpEvent<any>> {
-
+    this.loaderService.show()
     let userObj = JSON.parse(
       localStorage.getItem(getStorageName(storageNamesEnum.currentUser))
     );
@@ -37,6 +39,7 @@ export class AuthInterceptor implements HttpInterceptor {
       // }
     });
 
-    return next.handle(request);
+    return next.handle(request).pipe(
+      finalize(() => this.loaderService.hide()))
   }
 }

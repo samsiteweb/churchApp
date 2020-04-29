@@ -16,6 +16,7 @@ import { ReactiveFormsModule, FormsModule } from "@angular/forms";
 import { OrganisationListResolver } from "./services/orgListResolver.service";
 import { AuthGard } from "./services/authGuard.service";
 import { AuthInterceptor } from "./services/interceptors/auth.interceptors";
+import { TopLoaderService } from './services/top-loader.service';
 
 @NgModule({
   declarations: [
@@ -38,7 +39,9 @@ import { AuthInterceptor } from "./services/interceptors/auth.interceptors";
   providers: [
     OrganisationListResolver,
     AuthGard,
+    TopLoaderService,
     {
+
       provide: HTTP_INTERCEPTORS,
       useClass: AuthInterceptor,
       multi: true,
@@ -46,4 +49,4 @@ import { AuthInterceptor } from "./services/interceptors/auth.interceptors";
   ],
   bootstrap: [AppComponent],
 })
-export class AppModule {}
+export class AppModule { }

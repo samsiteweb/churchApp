@@ -3,6 +3,8 @@ import { FormBuilder, Validators } from "@angular/forms";
 import { AuthServiceService } from "src/app/services/auth-service.service";
 import { SharedPersonalDataService } from "../../shared/shared.personal.data.service";
 import { MemberActionsService } from "src/app/services/member-actions.service";
+import { ModalserviceService } from 'src/app/services/modalservice.service';
+
 
 @Component({
   selector: "app-schedule-ride",
@@ -17,7 +19,8 @@ export class ScheduleRideComponent implements OnInit {
   constructor(
     private fb: FormBuilder,
     private dataService: SharedPersonalDataService,
-    private memberService: MemberActionsService
+    private memberService: MemberActionsService,
+    private modalService: ModalserviceService
   ) {
     this.dataService.userInfo.subscribe((data) => {
       this.userInfo = data;
@@ -61,7 +64,12 @@ export class ScheduleRideComponent implements OnInit {
     this.isSubmitted = true;
     if (this.rideForm.valid) {
 
-      this.memberService.scheduleRide(form.value).subscribe((res) => {
+      this.memberService.scheduleRide(form.value).subscribe((res: any) => {
+        console.log(res, "response")
+        this.isSubmitted = false
+        this.modalService.successModal(`For addition support, kindly reach out to us at contact@igeeksng.com.`, 'Schedule Created Successfully')
+      }, err => {
+        this.modalService.toastModal('error', err.error.Message, "top-end")
 
       });
     }

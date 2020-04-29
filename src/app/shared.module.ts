@@ -7,6 +7,7 @@ import { DialogComponent } from "./pages/components/dialog/dialog.component";
 import { FormsModule, ReactiveFormsModule } from "@angular/forms";
 import { ScheduleCardsComponent } from "./pages/components/schedule-cards/schedule-cards.component";
 import { DatatableComponent } from "./pages/components/datatable/datatable.component";
+import { LoaderComponent } from './components/loader/loader.component';
 
 @NgModule({
   declarations: [
@@ -14,6 +15,7 @@ import { DatatableComponent } from "./pages/components/datatable/datatable.compo
     DialogComponent,
     ScheduleCardsComponent,
     DatatableComponent,
+    LoaderComponent
   ],
   imports: [CommonModule, FormsModule, ReactiveFormsModule, CustomMaterialModule, FlexLayoutModule, FormsModule],
   exports: [
@@ -24,6 +26,7 @@ import { DatatableComponent } from "./pages/components/datatable/datatable.compo
     DialogComponent,
     ScheduleCardsComponent,
     DatatableComponent,
+    LoaderComponent
   ],
 })
 export class SharedModule { }
