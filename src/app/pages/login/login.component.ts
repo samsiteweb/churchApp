@@ -41,16 +41,17 @@ export class LoginComponent implements OnInit {
     });
   }
 
-  openDialog(message, type): void {
-    const dialogRef = this.dialog.open(DialogComponent, {
-      width: "300px",
-      data: { type: type, code: this.code, message: message },
-    });
+  // openDialog(message, type): void {
+  //   console.log(message, type, this.code)
+  //   const dialogRef = this.dialog.open(DialogComponent, {
+  //     width: "300px",
+  //     data: { type: type, code: this.code, message: message },
+  //   });
 
-    dialogRef.afterClosed().subscribe((result) => {
+  //   dialogRef.afterClosed().subscribe((result) => {
 
-    });
-  }
+  //   });
+  // }
 
   ngOnInit(): void { }
 
@@ -70,15 +71,15 @@ export class LoginComponent implements OnInit {
 
           this.requestStart = false;
 
-          if (err.status == 511) {
-            this.openSnackBar(err.error.Message, "ok");
-            this.openDialog(
-              err.error.Message,
-              "auth"
-            );
-          } else {
-            this.router.navigate(["./signup/member"]);
-          }
+          // if (err.status == 511) {
+          //   this.openSnackBar(err.error.Message, "ok");
+          // this.openDialog(
+          //   err.error.Message,
+          //   "auth"
+          // );
+          // } else {
+          //   this.router.navigate(["./signup/member"]);
+          // }
         }
       );
     } else {

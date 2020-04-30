@@ -8,16 +8,17 @@
       <div class="example-element-detail" [@detailExpand]="element == expandedElement ? 'expanded' : 'collapsed'">
         <div class="example-element-description" style="width: 100%;">
           <div fxLayout="column" *ngIf="tableType == 'memberSchedule'">
-            <div class="example-button-container">
-              <button (click)="deleteSchedule(element)" mat-mini-fab color="warn"
-                aria-label="Example icon button with a filter list icon">
-                <mat-icon>delete</mat-icon>
-              </button>
-              <button [matMenuTriggerFor]="appMenu" mat-flat-button color="accent">Actions</button>
+            <div class="example-button-container" fxLayoutAlign="end center">
+
+              <button [matMenuTriggerFor]="appMenu" mat-button color="accent">Actions</button>
               <mat-menu #appMenu="matMenu">
                 <button mat-menu-item (click)="actionBtn(actions, element)"
                   *ngFor="let actions of scheduleActions">{{actions.ScheduleStatus}} Schedule</button>
               </mat-menu>
+              <button (click)="deleteSchedule(element)" mat-icon-button color="warn"
+                aria-label="Example icon button with a filter list icon">
+                <mat-icon>delete</mat-icon>
+              </button>
             </div>
           </div>
           <div fxLayout="column" *ngIf="tableType == 'memberManagement'">

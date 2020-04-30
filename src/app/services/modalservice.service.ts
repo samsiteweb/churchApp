@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import Swal from 'sweetalert2'
+import { MatDialog } from '@angular/material/dialog';
 
 @Injectable({
   providedIn: 'root'
@@ -15,6 +16,15 @@ export class ModalserviceService {
       'success'
     )
   }
+  customModal(message, icon, title?: any, ) {
+    Swal.fire(
+      `${title ? title : 'Successful!'}`,
+      `${message}`,
+      icon
+    )
+  }
+
+
 
   toastModal(icon, message, position) {
     const Toast = Swal.mixin({

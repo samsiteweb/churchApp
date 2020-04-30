@@ -3,7 +3,7 @@ import { MediaMatcher } from "@angular/cdk/layout";
 import { ChangeDetectorRef, OnDestroy } from "@angular/core";
 import { AuthServiceService } from "src/app/services/auth-service.service";
 import { ActivatedRoute } from "@angular/router";
-import { switchMap, take } from "rxjs/operators";
+import { switchMap, take, tap } from "rxjs/operators";
 import { SharedPersonalDataService } from "./shared/shared.personal.data.service";
 import { Subscription } from "rxjs";
 @Component({
@@ -54,12 +54,17 @@ export class HomeComponent implements OnInit, OnDestroy {
     this.subscription = this.authService.currentUser
       .pipe(
         switchMap((data: any) =>
-          this.authService.getUserInfo(data.Token.Token)
+
+          this.authService.getUserInfo()
         ),
+        tap((data) => {
+          console.log(data, "data from pipe")
+        }),
         take(1)
       )
       .subscribe((data) => {
         this.userInfo = data;
+        console.log(this.userInfo, "user info")
         this.dataService.setUserInfo(data);
 
       });

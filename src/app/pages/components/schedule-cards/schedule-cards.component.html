@@ -2,20 +2,21 @@
   <div fxLayoutAlign="start">
     <mat-menu #appMenu="matMenu">
       <button mat-menu-item (click)="actionBtn(actions, schedule)"
-        *ngFor="let actions of scheduleActions">{{actions.ScheduleStatus}} Schedule</button>
+        *ngFor="let actions of scheduleActions">{{actions.ScheduleStatus}}</button>
     </mat-menu>
 
     <button [matMenuTriggerFor]="appMenu" mat-icon-button
       aria-label="Example icon button with a vertical three dot icon">
       <mat-icon>more_vert</mat-icon>
     </button>
-
-
   </div>
   <div style="margin-top: -20px; padding-bottom: 10px; text-align: center;">
     <mat-icon style="font-size: 30px; color: #a3a2a2;" aria-hidden="false" aria-label="Example home icon">schedule
     </mat-icon>
   </div>
+  <p style="text-align: center;"><b style="color: #f50057;">Status: </b> <span
+      [ngStyle]="{'color':schedule.ScheduleStatusInfo.ScheduleStatusColor}"><b>{{schedule.ScheduleStatusInfo.ScheduleStatus}}</b></span>
+  </p>
   <div style="padding-left: 20px; padding-right: 20px;" fxLayout="column" fxLayoutAlign="center center">
     <div fxLayout="row" fxLayoutGap="10px">
       <p style="font-size: 1.5rem;">
@@ -37,10 +38,9 @@
   </div>
 
   <div style="padding-left: 10px;" fxLayout="row" fxLayoutAlign="space-between space-between">
-    <p *ngIf="type !== 'transport'"><b style="color: #f50057;">Status: </b> <span
-        [ngStyle]="{'color':schedule.ScheduleStatusInfo.ScheduleStatusColor}"><b>{{schedule.ScheduleStatusInfo.ScheduleStatus}}</b></span>
-    </p>
-    <button *ngIf="type == 'transport'" (click)="assign()" mat-stroked-button color="warn">Assign Schedule</button>
+
+    <button *ngIf="type == 'transport' && schedule.ScheduleStatusInfo.ScheduleStatus =='Queued' " (click)="assign()"
+      mat-button color="warn">Pick Up</button>
     <div>
       <button (click)="deleteSchedule()" mat-icon-button color="warn"
         aria-label="Example icon-button with a heart icon">

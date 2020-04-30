@@ -14,6 +14,7 @@ import { DialogComponent } from 'src/app/pages/components/dialog/dialog.componen
 export class ProfileComponent implements OnInit {
   userInfo;
   code: string
+  altForm
   userForm: any;
   constructor(
     private fb: FormBuilder,
@@ -22,7 +23,7 @@ export class ProfileComponent implements OnInit {
   ) {
     this.dataService.userInfo.subscribe((data) => {
       this.userInfo = data;
-
+      console.log(this.userInfo)
     });
 
     const {
@@ -35,19 +36,29 @@ export class ProfileComponent implements OnInit {
 
     this.userForm = this.fb.group({
       newAddress: this.fb.group({
-        state: [State, [Validators.required]],
-        city: [City, [Validators.required]],
-        streetAddress: [StreetAddress, [Validators.required]],
-        zipCode: [ZipCode, [Validators.required]],
-        country: [Country, [Validators.required]],
+        state: [{ value: State, disabled: true }, [Validators.required]],
+        city: [{ value: City, disabled: true }, [Validators.required]],
+        streetAddress: [{ value: StreetAddress, disabled: true }, [Validators.required]],
+        zipCode: [{ value: ZipCode, disabled: true }, [Validators.required]],
+        country: [{ value: Country, disabled: true }, [Validators.required]],
       }),
       requestRideDateTime: "2020-04-14T18:23:15.904Z",
       extraNote: ["", [Validators.required]],
       ridersCount: [
-        this.userInfo.RideRequestMemberCount,
+        { value: this.userInfo.RideRequestMemberCount, disabled: true }
+        ,
         [Validators.required],
       ],
     });
+
+    this.altForm = this.fb.group(
+      {
+        memberId: "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+        allowMemberToRecieveNotification: true,
+        alternativeEmailAddress: "string",
+        alternativeMobileContact: "string"
+      }
+    )
   }
 
   onSubmit(form) {
@@ -73,7 +84,6 @@ export class ProfileComponent implements OnInit {
 
   requestDeleteAccount(type) {
     this.memberAction.requestDeleteAccount().subscribe((data: any) => {
-
       this.openSnackBar("Request Sent Successfully", "ok")
       this.openDialog(
         data.Message,

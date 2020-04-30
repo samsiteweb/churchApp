@@ -114,6 +114,7 @@ export class MemberManagementComponent implements OnInit {
   removeFromTransport(event) {
     this.memberAction.deleteFromTransportationDept(event.userId).subscribe((data: any) => {
       this.modalService.toastModal('success', data.Message, 'top-end');
+      this.getAllTransportationMembers()
     }, err => {
       this.modalService.toastModal('error', err.error.Message, 'top-end');
     });

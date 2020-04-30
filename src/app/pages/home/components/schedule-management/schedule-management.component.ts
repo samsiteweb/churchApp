@@ -51,6 +51,8 @@ export class ScheduleManagementComponent implements OnInit {
       .subscribe((data: any) => {
         // this.sliceSchedule({ ScheduleId: event.ScheduleId })
         this.modalService.toastModal('success', data.Message, "top-end")
+        this.getAllSchedules()
+        this.getActiveSchedules()
       }, err => {
         this.modalService.toastModal('error', err.error.Message, "top-end")
         console.log(err.error.Message)
@@ -86,6 +88,7 @@ export class ScheduleManagementComponent implements OnInit {
         this.sliceSchedule(sche)
         this.modalService.toastModal('success', 'Schedule deleted successfully', "top-end")
         // this.modalService.toastModal('success', "Deleted Successfully", 'top-end')
+        this.getAllSchedules()
       },
       (err) => {
         this.modalService.toastModal('error', err.error.Message, "top-end")

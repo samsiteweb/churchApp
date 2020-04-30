@@ -51,12 +51,6 @@ export class AuthServiceService {
     const options = { params: new HttpParams({ fromObject: params }) };
     return options;
   }
-
-  // headerSt(token) {
-  //   return new HttpHeaders({
-  //     Authorization: `Bearer ${token}`,
-  //   });
-  // }
   setNumber(number) {
     this.loginParam.next(number);
   }
@@ -135,7 +129,7 @@ export class AuthServiceService {
     this.router.navigateByUrl("/");
   }
 
-  getUserInfo(token) {
+  getUserInfo() {
     return this.httpClient.get(`${this.apiUrl}/Transportation/RetrieveInfo`);
   }
 

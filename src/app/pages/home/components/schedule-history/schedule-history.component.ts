@@ -34,7 +34,9 @@ export class ScheduleHistoryComponent implements OnInit {
         this.memberAction.updateMemberScheduleStatus(event.ScheduleStatusId, event.ScheduleId)
           .subscribe((data: any) => {
             this.sliceSchedule({ ScheduleId: event.ScheduleId })
+
             this.modalService.toastModal('success', data.Message, "top-end")
+            this.getAllSchedules()
           }, err => {
             this.modalService.toastModal('error', err.error.Message, "top-end")
           })
@@ -78,6 +80,7 @@ export class ScheduleHistoryComponent implements OnInit {
       (data: any) => {
         this.sliceSchedule(sche)
         this.modalService.toastModal('success', 'Schedule deleted successfully', "top-end")
+        this.getAllSchedules()
       },
       (err) => {
         this.modalService.toastModal('error', err.error.Message, "top-end")

@@ -2,7 +2,11 @@
   width: 250px;
   // padding: 30px;
 }
-
+.active-link {
+  background-color: rgb(255, 200, 200);
+ color: rgb(0, 0, 0) !important;
+}
+// a.mat-list-item.active { color: #ccc; }
 .example-icon {
   padding: 0 14px;
 }

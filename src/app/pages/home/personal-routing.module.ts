@@ -11,6 +11,7 @@ import { ScheduleManagementComponent } from './components/schedule-management/sc
 // import { ScheduleRideComponent } from "./components/schedule-ride/schedule-ride.component";
 
 const personalRoutes: Routes = [
+
   {
     path: "",
     component: HomeComponent,
@@ -40,8 +41,14 @@ const personalRoutes: Routes = [
         path: "history",
         component: ScheduleHistoryComponent,
       },
+      {
+        path: "",
+        redirectTo: "/home/history",
+        pathMatch: "full"
+      }
     ],
   },
+
 ];
 
 @NgModule({

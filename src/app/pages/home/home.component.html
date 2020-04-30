@@ -46,28 +46,31 @@
         </div>
         <p>{{ userInfo.Email }}</p>
         <h3 matSubheader>Events</h3>
-        <mat-list-item routerLink="/home/ride" (click)='pageTitle = "Schedule Ride"'>
+        <mat-list-item routerLink="/home/ride" routerLinkActive="active-link" (click)='pageTitle = "Schedule Ride"'>
           <button mat-icon-button class="mat-list-icon">
             <mat-icon>departure_board</mat-icon>
           </button>
           <a matLine (click)='pageTitle = "Schedule Ride"'>Schedule Ride</a>
         </mat-list-item>
-        <mat-list-item routerLink="/home/history" (click)='pageTitle = "Schedule Manager"'>
-          <a matLine>Schedules Manager</a>
+        <mat-list-item routerLink="/home/history" routerLinkActive="active-link"
+          (click)='pageTitle = "Schedule Manager"'>
+          <a matLine>Manage Schedules </a>
           <button mat-icon-button class="mat-list-icon">
             <mat-icon>history</mat-icon>
           </button>
         </mat-list-item>
-        <mat-list-item routerLink="/home/transport-management" (click)='pageTitle = "Member Manager"'>
+        <mat-list-item routerLink="/home/transport-management" routerLinkActive="active-link"
+          (click)='pageTitle = "Member Manager"'>
           <a matLine>Member Management </a>
-          <button mat-icon-button class="mat-list-icon">
-            <mat-icon>history</mat-icon>
+          <button mat-icon-button class="mat-list-icon" fxLayoutAlign="center center">
+            <mat-icon>people</mat-icon>
           </button>
         </mat-list-item>
-        <mat-list-item routerLink="/home/member" (click)='pageTitle = "Manage Transport Members"'>
+        <mat-list-item routerLink="/home/member" routerLinkActive="active-link"
+          (click)='pageTitle = "Manage Transport Members"'>
           <a matLine>Transport Department</a>
           <button mat-icon-button class="mat-list-icon">
-            <mat-icon>history</mat-icon>
+            <mat-icon>directions_car</mat-icon>
           </button>
         </mat-list-item>
       </mat-nav-list>
