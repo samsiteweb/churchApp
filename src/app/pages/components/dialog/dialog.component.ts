@@ -41,12 +41,10 @@ export class DialogComponent implements OnInit {
         this.verifyStart = false;
         this.onNoClick();
         this.router.navigateByUrl("/home/ride");
-
       },
       (err) => {
         this.modalService.toastModal('error', err.error.Message, "top-end")
         this.verifyStart = false;
-
       }
     );
   }
@@ -73,17 +71,13 @@ export class DialogComponent implements OnInit {
   confirmDelete() {
     this.verifyStart = true;
     this.memberAction.deleteAccount(this.data.code, this.data.actionType).subscribe((data: any) => {
-
-
       this.authService.logoutUser()
       this.verifyStart = false;
       this.modalService.toastModal('success', data.Message, "top-end")
       this.onNoClick();
     }, err => {
       this.verifyStart = false;
-
       this.modalService.toastModal('error', err.error.Message, "top-end")
-
     })
   }
 }

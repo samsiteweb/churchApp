@@ -6,9 +6,8 @@ import { DialogComponent } from '../pages/components/dialog/dialog.component';
   providedIn: 'root'
 })
 export class DialogService {
-
+  verifyStart = false
   constructor(private dialog: MatDialog) { }
-
 
   openDialog(message, type): void {
     const dialogRef = this.dialog.open(DialogComponent, {

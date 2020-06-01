@@ -67,7 +67,7 @@ export class AuthServiceService {
           this.resolveLogin(data);
         }),
         mergeMap((data: any) =>
-          this.getUserInfo(data.Token.Token).pipe(
+          this.getUserInfo().pipe(
             tap((data) => {
 
             })
@@ -92,7 +92,7 @@ export class AuthServiceService {
           this.resolveLogin(data);
         }),
         mergeMap((data: any) =>
-          this.getUserInfo(data.Token.Token).pipe(
+          this.getUserInfo().pipe(
             tap((data) => {
 
             })
